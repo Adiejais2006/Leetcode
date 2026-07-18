@@ -1,0 +1,12 @@
+// Last updated: 7/18/2026, 1:59:25 PM
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int k) {
+        int sum  = 0 ;
+        int n = nums.size();
+        for(int i = 0 ; i<n ; i++) sum+=nums[i];
+
+        return sum%k;
+
+    }
+};
