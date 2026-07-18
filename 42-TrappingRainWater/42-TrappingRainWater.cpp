@@ -1,4 +1,4 @@
-// Last updated: 7/18/2026, 4:58:48 PM
+// Last updated: 7/18/2026, 5:01:13 PM
 1class Solution {
 2public:
 3    int trap(vector<int>& nums) {
@@ -8,8 +8,8 @@
 7        int l = 0;
 8        int r = n - 1;
 9        int ans = 0;
-10        while (l < r) {
-11            if (nums[l] >= nums[r]) {
+10        while (l <= r) {
+11            if (lmax >= rmax) {
 12                rmax = max(rmax, nums[r]);
 13                ans += rmax - nums[r];
 14                r--;
