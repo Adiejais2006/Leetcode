@@ -1,20 +1,16 @@
-// Last updated: 7/19/2026, 11:24:28 PM
+// Last updated: 7/19/2026, 11:29:16 PM
 1class Solution {
 2public:
 3    int firstMatchingIndex(string s) {
-4        
-5        int left = 0;
-6
-7        int right = s.size()-1;
-8
-9        while(left<=right) {
-10
-11            if(s[left]==s[right]) {
-12                return left;
-13            }
-14            left++;
-15            right--;
-16        }
-17        return -1;
-18    }
-19};
+4        int l = 0;
+5        int r = s.size()-1;
+6        while(l<=r) {
+7            if(s[l]==s[r]) {
+8                return l;
+9            }
+10            l++;
+11            r--;
+12        }
+13        return -1;
+14    }
+15};
