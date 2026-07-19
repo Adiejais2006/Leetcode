@@ -1,26 +1,17 @@
-// Last updated: 7/19/2026, 11:24:21 PM
+// Last updated: 7/19/2026, 11:27:48 PM
 1class Solution {
 2public:
 3    string reversePrefix(string s, int k) {
-4
-5        if(k==1) {
-6            return s;
-7        }
-8        int  n = s.size();
-9
-10        int first = 0; 
-11        int last = k-1;
-12
-13        while(first < last) {
-14
-15            char temp = s[first];
-16            s[first] = s[last];
-17            s[last]=temp;
-18            first++;
-19            last--;
-20        }
-21
-22
-23        return s;
-24    }
-25};
+4        if (k == 1) {
+5            return s;
+6        }
+7        int i = 0;
+8        int j = k - 1;
+9        while (i < j) {
+10            swap(s[i], s[j]);
+11            i++;
+12            j--;
+13        }
+14        return s;
+15    }
+16};
