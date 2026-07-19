@@ -1,17 +1,17 @@
-// Last updated: 7/19/2026, 1:44:46 PM
-1class Solution {
-2public:
-3    vector<int> recoverOrder(vector<int>& order, vector<int>& friends) {
-4        vector<int> ans;
-5        unordered_map<int, int> mpp;
-6        for (auto it : friends) {
-7            mpp[it]++;
-8        }
-9
-10        for (auto it : order) {
-11            if (mpp.count(it))
-12                ans.push_back(it);
-13        }
-14        return ans;
-15    }
-16};
+// Last updated: 7/19/2026, 1:45:21 PM
+class Solution {
+public:
+    vector<int> recoverOrder(vector<int>& order, vector<int>& friends) {
+
+        unordered_set<int> st(friends.begin(), friends.end());
+        vector<int> result;
+
+        for (int num : order) {
+            if (st.count(num)) {
+                result.push_back(num);
+            }
+        }
+
+        return result;
+    }
+};
