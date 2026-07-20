@@ -1,4 +1,4 @@
-// Last updated: 7/21/2026, 12:51:40 AM
+// Last updated: 7/21/2026, 12:53:28 AM
 1class Solution {
 2    int dayscal(vector<int>& weights, int capacity) {
 3        int sum = 0;
