@@ -1,4 +1,4 @@
-// Last updated: 7/21/2026, 7:37:14 PM
+// Last updated: 7/21/2026, 7:38:27 PM
 1class Solution {
 2    double helper(vector<int>& dist, double hour, double speed) {
 3        double hours = 0;
@@ -22,7 +22,7 @@
 21            double timeTaken = helper(dist, hour, mid);
 22            if (timeTaken <= hour) {
 23                high = mid - 1;
-24            } else if (timeTaken > hour) {
+24            } else  {
 25                low = mid + 1;
 26            }
 27        }
