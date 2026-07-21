@@ -1,37 +1,38 @@
-// Last updated: 7/22/2026, 12:05:21 AM
+// Last updated: 7/22/2026, 12:15:26 AM
 1class Solution {
-2public:
-3    int kthSmallest(vector<vector<int>>& matrix, int k) {
-4        int n = matrix.size();
-5        priority_queue<pair<int, pair<int, int>>,
-6                       vector<pair<int, pair<int, int>>>,
-7                       greater<pair<int, pair<int, int>>>>
-8            pq;
-9
-10        pq.push({matrix[0][0], {0, 0}});
-11        vector<vector<int>> vis(n, vector<int>(n, 0));
-12        vis[0][0]= 1 ;
-13        int dx[] = {1, 0};
-14        int dy[] = {0, 1};
-15
-16        while (k>1) {
-17            auto it = pq.top();
-18            pq.pop();
-19            int valu = it.first;
-20            int x = it.second.first;
-21            int y = it.second.second;
-22            for (int i = 0; i < 2; i++) {
-23                int nx = x + dx[i];
-24                int ny = y + dy[i];
-25                if (nx >= 0 && nx < n && ny >= 0 && ny < n && !vis[nx][ny]) {
-26                    vis[nx][ny] = 1; 
-27                    pq.push({matrix[nx][ny], {nx, ny}});
-28                }
-29            }
-30            k--;
-31        }
-32
-33       
-34        return pq.top().first;
-35    }
-36};
+2    int helper(vector<vector<int>>& matrix, int mid) {
+3        int n = matrix.size();
+4        int i = n - 1;
+5        int j = 0;
+6        int cnt = 0;
+7        while (i >= 0 && j < n) {
+8            if (matrix[i][j] <= mid) {
+9                cnt += i + 1;
+10                j++;
+11            } else {
+12                i--;
+13            }
+14        }
+15        return cnt;
+16    }
+17
+18public:
+19    int kthSmallest(vector<vector<int>>& matrix, int k) {
+20        int n = matrix.size();
+21        int low = matrix[0][0];
+22        int high = matrix[n - 1][n - 1];
+23
+24        while (low <= high) {
+25            int mid = low + (high - low) / 2;
+26
+27            int cnt = helper(matrix, mid);
+28
+29            if (cnt >= k)
+30                high = mid - 1;
+31            else
+32                low = mid + 1;
+33        }
+34
+35        return low;
+36    }
+37};
