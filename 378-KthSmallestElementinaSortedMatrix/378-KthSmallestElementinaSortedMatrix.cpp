@@ -1,4 +1,4 @@
-// Last updated: 7/22/2026, 12:02:09 AM
+// Last updated: 7/22/2026, 12:05:21 AM
 1class Solution {
 2public:
 3    int kthSmallest(vector<vector<int>>& matrix, int k) {
@@ -9,8 +9,8 @@
 8            pq;
 9
 10        pq.push({matrix[0][0], {0, 0}});
-11
-12        vector<vector<int>> vis(n, vector<int>(n, 0));
+11        vector<vector<int>> vis(n, vector<int>(n, 0));
+12        vis[0][0]= 1 ;
 13        int dx[] = {1, 0};
 14        int dy[] = {0, 1};
 15
