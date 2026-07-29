@@ -1,19 +1,30 @@
-// Last updated: 7/29/2026, 8:08:12 PM
-1class Solution {
-2public:
-3    vector<string> fizzBuzz(int n) {
-4        vector<string> ans;
-5
-6        for (int i = 1; i <= n; i++) {
-7            if (i % 3 == 0 && i % 5 == 0)
-8                ans.push_back("FizzBuzz");
-9            else if (i % 3 == 0)
-10                ans.push_back("Fizz");
-11            else if (i % 5 == 0)
-12                ans.push_back("Buzz");
-13            else
-14                ans.push_back(to_string(i));
-15        }
-16        return ans;
-17    }
-18};
+// Last updated: 7/29/2026, 8:08:39 PM
+class Solution {
+public:
+    std::vector<std::string> fizzBuzz(int n) {
+        std::vector<std::string> res;
+        int i = 1, fizz = 0, buzz = 0;
+
+        while (i <= n) {
+            fizz++;
+            buzz++;
+
+            if (fizz == 3 && buzz == 5) {
+                res.push_back("FizzBuzz");
+                fizz = buzz = 0;
+            } else if (fizz == 3) {
+                res.push_back("Fizz");
+                fizz = 0;
+            } else if (buzz == 5) {
+                res.push_back("Buzz");
+                buzz = 0;
+            } else {
+                res.push_back(std::to_string(i));
+            }
+
+            i++;
+        }
+
+        return res;
+    }
+};
