@@ -1,15 +1,16 @@
-// Last updated: 7/29/2026, 7:45:48 PM
+// Last updated: 7/29/2026, 7:46:26 PM
 1class Solution {
 2public:
 3    vector<int> getConcatenation(vector<int>& nums) {
-4        int n = nums.size();
-5        vector<int> ans(2 * n);
-6        for (int i = 0; i < n; i++) {
-7            ans[i] = nums[i];
-8        }
-9        for (int i = n - 1; i < 2 * n; i++) {
-10            ans[i] = nums[i % n];
-11        }
-12        return ans;
-13    }
-14};
+4
+5        int n = nums.size();
+6
+7        vector<int> ans(2 * n, 0);
+8
+9        for (int i = 0; i < n; i++) {
+10            ans[i] = nums[i];
+11            ans[n + i] = nums[i];
+12        }
+13        return ans;
+14    }
+15};
