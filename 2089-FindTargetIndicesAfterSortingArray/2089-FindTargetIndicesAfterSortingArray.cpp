@@ -1,4 +1,4 @@
-// Last updated: 8/5/2026, 5:04:08 PM
+// Last updated: 8/5/2026, 5:04:12 PM
 1class Solution {
 2public:
 3    vector<int> targetIndices(vector<int>& nums, int target) {
