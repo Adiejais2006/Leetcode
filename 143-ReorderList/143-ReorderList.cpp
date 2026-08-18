@@ -1,44 +1,37 @@
-// Last updated: 7/18/2026, 2:06:02 PM
-
-class Solution {
-
-    ListNode* reverse(ListNode* head) {
-        ListNode* prev = NULL;
-        ListNode* temp = head;
-
-        while (temp != NULL) {
-            ListNode* nextelement = temp->next;
-            temp->next = prev;
-            prev = temp;
-            temp = nextelement;
-        }
-        return prev;
-    }
-
-public:
-    void reorderList(ListNode* head) {
-        if (!head || !head->next)
-            return;
-        ListNode* slow = head;
-        ListNode* fast = head;
-
-        while (fast != NULL && fast->next != NULL) {
-
-            fast = fast->next->next;
-            slow = slow->next;
-        }
-
-        ListNode* first = head;
-        ListNode* second = reverse(slow->next);
-        slow->next = nullptr;
-        while (second) {
-            ListNode* temp = first->next;
-            ListNode* prevTemp = second->next;
-
-            first->next = second;
-            second->next = temp;
-            first = temp;
-            second = prevTemp;
-        }
-    }
-};
+// Last updated: 8/18/2026, 7:44:32 PM
+1class Solution {
+2    ListNode* reverse(ListNode* head) {
+3        ListNode* prev = NULL;
+4        ListNode* cur = head;
+5        while (cur != NULL) {
+6            ListNode* nextNode = cur->next;
+7            cur->next = prev;
+8            prev = cur;
+9            cur = nextNode;
+10        }
+11        return prev;
+12    }
+13public:
+14    void reorderList(ListNode* head) {
+15        if (head == NULL || head->next == NULL)
+16            return;
+17        ListNode* slow = head;
+18        ListNode* fast = head;
+19        while (fast->next != NULL && fast->next->next != NULL) {
+20            slow = slow->next;
+21            fast = fast->next->next;
+22        }
+23        ListNode* right = slow->next;
+24        slow->next = NULL;
+25        right = reverse(right);
+26        ListNode* left = head;
+27        while (right != NULL) {
+28            ListNode* nextLeft = left->next;
+29            ListNode* nextRight = right->next;
+30            left->next = right;
+31            right->next = nextLeft;
+32            left = nextLeft;
+33            right = nextRight;
+34        }
+35    }
+36};
