@@ -1,4 +1,4 @@
-// Last updated: 8/18/2026, 7:44:32 PM
+// Last updated: 8/18/2026, 7:46:31 PM
 1class Solution {
 2    ListNode* reverse(ListNode* head) {
 3        ListNode* prev = NULL;
