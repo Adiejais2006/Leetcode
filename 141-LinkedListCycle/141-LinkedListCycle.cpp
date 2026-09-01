@@ -1,20 +1,18 @@
-// Last updated: 7/18/2026, 2:06:03 PM
-class Solution {
-public:
-    bool hasCycle(ListNode* head) {
-        if (!head)
-            return false;
-        if (head->next == NULL)
-            return false;
-        ListNode* slow = head;
-        ListNode* fast = head;
-        while (fast != NULL && fast->next != NULL) {
-
-            slow = slow->next;
-            fast = fast->next->next;
-            if (slow == fast)
-                return true;
-        }
-        return false;
-    }
-};
+// Last updated: 9/1/2026, 7:39:48 PM
+1class Solution {
+2public:
+3    bool hasCycle(ListNode* head) {
+4        if (!head)
+5            return false;
+6        ListNode* slow = head;
+7        ListNode* fast = head;
+8      while (fast != NULL && fast->next != NULL){
+9            slow=slow->next;
+10            if(fast->next==NULL) return false;
+11            fast=fast->next->next;
+12            if(slow==fast) return true;
+13            
+14        }
+15        return false;
+16    }
+17};
