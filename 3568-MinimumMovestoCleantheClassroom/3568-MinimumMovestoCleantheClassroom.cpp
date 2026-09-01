@@ -1,4 +1,4 @@
-// Last updated: 9/1/2026, 11:51:47 AM
+// Last updated: 9/1/2026, 11:52:12 AM
 1class Solution {
 2public:
 3    int minMoves(vector<string>& classroom, int energy) {
@@ -8,7 +8,7 @@
 7        int sr = -1, sc = -1;
 8        int cnt = 0;
 9
-10        // Give each litter an ID for bitmask
+10    
 11        vector<vector<int>> id(m, vector<int>(n, -1));
 12
 13        for(int i = 0; i < m; i++){
@@ -26,7 +26,7 @@
 25        int masks = 1 << cnt;
 26        int fullMask = masks - 1;
 27
-28        // best[r][c][mask] = max energy reached at this state
+28        
 29        vector<vector<vector<int>>> best(
 30            m,
 31            vector<vector<int>>(
@@ -59,11 +59,11 @@
 58            int en = cur.en;
 59            int dist = cur.dist;
 60
-61            // All litter collected
+61           
 62            if(mask == fullMask){
 63                return dist;
 64            }
-65            // No energy, cannot move
+65           
 66            if(en == 0){
 67                continue;
 68            }
@@ -72,12 +72,12 @@
 71                int nr = r + dr[d];
 72                int nc = c + dc[d];
 73
-74                // Outside grid
+74              
 75                if(nr < 0 || nr >= m || nc < 0 || nc >= n){
 76                    continue;
 77                }
 78
-79                // Obstacle
+79              
 80                if(classroom[nr][nc] == 'X'){
 81                    continue;
 82                }
@@ -85,17 +85,17 @@
 84                int newEn = en - 1;
 85                int newMask = mask;
 86
-87                // Collect litter
+87               
 88                if(classroom[nr][nc] == 'L'){
 89                    newMask |= (1 << id[nr][nc]);
 90                }
 91
-92                // Recharge
+92               
 93                if(classroom[nr][nc] == 'R'){
 94                    newEn = energy;
 95                }
 96
-97                // Already reached with more energy
+97              
 98                if(best[nr][nc][newMask] >= newEn){
 99                    continue;
 100                }
