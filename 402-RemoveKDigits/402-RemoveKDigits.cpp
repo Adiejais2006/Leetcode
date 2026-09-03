@@ -1,36 +1,36 @@
-// Last updated: 7/18/2026, 2:04:43 PM
-class Solution {
-public:
-    string removeKdigits(string nums, int k) {
-        int n = nums.size();
-        if (k == n)
-            return "0";
-        string ans = "";
-        stack<char> st;
-        for (int i = 0; i < n; i++) {
-            char currElement = nums[i];
-            while (!st.empty() && k > 0 && st.top() > currElement) {
-                st.pop();
-                k--;
-            }
-            st.push(nums[i]);
-        }
-        while (!st.empty() && k > 0) {
-            st.pop();
-            k--;
-        }
-
-        while (!st.empty()) {
-            ans.push_back(st.top());
-            st.pop();
-        }
-        reverse(ans.begin(), ans.end());
-        int ind = 0;
-        while (ind < ans.size() && ans[ind] == '0')
-            ind++;
-        ans = ans.substr(ind);
-        if (ans == "")
-            return "0";
-        return ans;
-    }
-};
+// Last updated: 9/3/2026, 3:56:46 PM
+1class Solution {
+2public:
+3    string removeKdigits(string num, int k) {
+4        stack<int> st;
+5        for (auto it : num) {
+6            while (!st.empty() && k > 0 && st.top() > it) {
+7                st.pop();
+8                k--;
+9            }
+10            st.push(it);
+11        }
+12        if (st.empty())
+13            return "0";
+14        while(!st.empty() && k>0){st.pop();k--;}
+15        string ans = "";
+16        while (!st.empty()) {
+17            ans += st.top();
+18            st.pop();
+19        }
+20        reverse(ans.begin(), ans.end());
+21        int nonzero = 0;
+22        for (auto it : ans) {
+23            if (it != '0')
+24                nonzero++;
+25        }
+26
+27        if (nonzero == 0)
+28            return "0";
+29        int i = 0;
+30        while (ans[i] == '0') {
+31            i++;
+32        }
+33        return ans.substr(i);
+34    }
+35};
