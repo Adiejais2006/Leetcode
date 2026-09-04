@@ -1,23 +1,20 @@
-// Last updated: 9/4/2026, 4:50:08 PM
+// Last updated: 9/4/2026, 4:54:42 PM
 1class RecentCounter {
-2    vector<int>nums;
-3public:
-4    RecentCounter() {
-5    }
-6    
+2    queue<int> q;
+3
+4public:
+5    RecentCounter() {}
+6
 7    int ping(int t) {
-8        nums.push_back(t);
-9        int low = t - 3000;
-10        int i = 0 ;
-11        int cnt = 0 ; 
-12        while(i<nums.size()){
-13            if(nums[i]>=low && nums[i] <= t ){
-14                cnt++;
-15            }
-16            i++;
-17        } 
-18        return cnt;
-19    }
-20};
-21
-22
+8        q.push(t);
+9        while (!q.empty() && q.front() < t-3000)
+10            q.pop();
+11        return q.size();
+12    }
+13};
+14
+15/**
+16 * Your RecentCounter object will be instantiated and called as such:
+17 * RecentCounter* obj = new RecentCounter();
+18 * int param_1 = obj->ping(t);
+19 */
