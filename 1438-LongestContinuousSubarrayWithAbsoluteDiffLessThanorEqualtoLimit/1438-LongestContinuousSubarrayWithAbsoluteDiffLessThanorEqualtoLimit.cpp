@@ -1,23 +1,23 @@
-// Last updated: 9/5/2026, 6:17:42 PM
+// Last updated: 9/6/2026, 12:54:42 AM
 1class Solution {
 2public:
 3    int longestSubarray(vector<int>& nums, int limit) {
 4        int l = 0;
 5        int r = 0;
 6        int n = nums.size();
-7        int ans = 0;
-8        priority_queue<pair<int, int>> maxheap;
-9        priority_queue<pair<int, int>, vector<pair<int, int>>,
-10                       greater<pair<int, int>>>
-11            minheap;
+7        priority_queue<pair<int, int>, vector<pair<int, int>>,
+8                       greater<pair<int, int>>>
+9            minheap;
+10        priority_queue<pair<int, int>> maxheap;
+11        int ans = 0;
 12        while (r < n) {
 13            maxheap.push({nums[r], r});
 14            minheap.push({nums[r], r});
 15            while (maxheap.top().first - minheap.top().first > limit) {
-16                l = min(maxheap.top().second, minheap.top().second) + 1 ;
-17                while (maxheap.top().second < l)
+16                l++;
+17                while (!maxheap.empty() && maxheap.top().second < l)
 18                    maxheap.pop();
-19                while (minheap.top().second < l)
+19                while (!minheap.empty() && minheap.top().second < l)
 20                    minheap.pop();
 21            }
 22            ans = max(ans, r - l + 1);
