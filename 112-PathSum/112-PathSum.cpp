@@ -1,26 +1,23 @@
-// Last updated: 9/6/2026, 4:12:54 PM
+// Last updated: 9/6/2026, 4:15:37 PM
 1class Solution {
 2    bool isLeaf(TreeNode* root) {
 3        if (root->left == NULL && root->right == NULL)
 4            return true;
 5        return false;
 6    }
-7    bool func(TreeNode* root, int sum, int target) {
+7    bool func(TreeNode* root, int target) {
 8        if (root == NULL)
 9            return false;
-10        sum += root->val;
-11        if (isLeaf(root)) {
-12            if (sum == target)
-13                return true;
-14            return false;
-15        }
-16        bool left = func(root->left, sum, target);
-17        bool right = func(root->right, sum, target);
-18        return left || right;
-19    }
-20
-21public:
-22    bool hasPathSum(TreeNode* root, int targetSum) {
-23        return func(root, 0, targetSum);
-24    }
-25};
+10        if (isLeaf(root)) {
+11            return target==root->val;
+12        }
+13        bool left = func(root->left, target - root->val);
+14        bool right = func(root->right, target - root->val);
+15        return left || right;
+16    }
+17
+18public:
+19    bool hasPathSum(TreeNode* root, int targetSum) {
+20        return func(root, targetSum);
+21    }
+22};
