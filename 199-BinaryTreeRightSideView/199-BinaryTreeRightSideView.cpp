@@ -1,30 +1,27 @@
-// Last updated: 7/18/2026, 2:05:42 PM
-
-class Solution {
-public:
-    vector<int> rightSideView(TreeNode* root) {
-         if(root==NULL) return{};
-        vector<int> ans;
-        queue<pair<TreeNode*, int>> q;  // node aur y coordinate
-        map<int, int> mpp;              // y coordinate aur value
-        q.push({root, 0});
-        while (!q.empty()) {
-            auto element = q.front();q.pop();
-            TreeNode* node = element.first;
-            int y = element.second;
-            int val = node->val;
-            mpp[y] = val;
-            if (node->left != NULL) {
-                q.push({node->left, y + 1});
-            }
-            if (node->right != NULL) {
-                q.push({node->right, y + 1});
-            }
-        }
-
-        for (auto it : mpp) {
-            ans.push_back(it.second);
-        }
-        return ans;
-    }
-};
+// Last updated: 9/6/2026, 6:33:30 PM
+1
+2class Solution {
+3public:
+4    vector<int> rightSideView(TreeNode* root) {
+5        if (root == nullptr)
+6            return {};
+7        queue<TreeNode*> q;
+8        q.push(root);
+9        vector<int> ans;
+10        while (!q.empty()) {
+11            auto size = q.size();
+12
+13            for (int i = 0; i < size; i++) {
+14                auto a = q.front();
+15                q.pop();
+16                if (i == size - 1)
+17                    ans.push_back(a->val);
+18                if (a->left != NULL)
+19                    q.push(a->left);
+20                if (a->right != NULL)
+21                    q.push(a->right);
+22            }
+23        }
+24        return ans;
+25    }
+26};
