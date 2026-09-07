@@ -1,4 +1,4 @@
-// Last updated: 9/7/2026, 4:19:26 PM
+// Last updated: 9/7/2026, 4:25:27 PM
 1class Solution {
 2    TreeNode* build(int preStart, int preEnd, int inStart, int inEnd,
 3                    vector<int>& preorder, vector<int>& inorder,
@@ -8,7 +8,7 @@
 7        TreeNode* root = new TreeNode(preorder[preStart]);
 8        int inRoot = mpp[root->val];
 9        int numsLeft = inRoot - inStart;
-10        root->left = build(preStart + 1, preStart + numsLeft, inStart, inStart + numsLeft,
+10        root->left = build(preStart + 1, preStart + numsLeft, inStart, inRoot - 1,
 11                           preorder, inorder, mpp);
 12        root->right = build(preStart + numsLeft + 1, preEnd, inRoot + 1, inEnd,
 13                            preorder, inorder, mpp);
