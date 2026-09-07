@@ -1,37 +1,27 @@
-// Last updated: 9/8/2026, 12:49:12 AM
+// Last updated: 9/8/2026, 12:49:19 AM
 1class Solution {
 2public:
 3    bool backspaceCompare(string s, string t) {
-4
-5        stack<char> st1;
-6        stack<char> st2;
-7
-8        for(char ch : s){
-9            if(ch != '#'){
-10                st1.push(ch);
-11            }
-12            else{
-13                if(!st1.empty()){
-14                    st1.pop();
-15
-16                }
-17            }
-18        }
-19        for(char ch : t){
-20            if(ch != '#'){
-21                st2.push(ch);
-22            }
-23            else{
-24                if(!st2.empty()){
-25                    st2.pop();
+4        stack<char> s1;
+5        stack<char> s2;
+6
+7        for (auto it : s) {
+8            if (it == '#') {
+9                if (!s1.empty()) s1.pop(); 
+10            } else {
+11                s1.push(it);
+12            }
+13        }
+14
+15        for (auto it : t) {
+16            if (it == '#') {
+17                if (!s2.empty()) s2.pop(); 
+18            } else {
+19                s2.push(it);
+20            }
+21        }
+22
+23        return s1 == s2;
+24    }
+25};
 26
-27                }
-28            }
-29        }
-30
-31        return st1 == st2;
-32                
-33
-34        
-35    }
-36};
