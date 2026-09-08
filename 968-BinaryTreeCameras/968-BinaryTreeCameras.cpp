@@ -1,4 +1,4 @@
-// Last updated: 9/8/2026, 11:31:45 PM
+// Last updated: 9/8/2026, 11:34:02 PM
 1class Solution {
 2    int cameras = 0;
 3    int dfs(TreeNode* root) {
@@ -11,7 +11,7 @@
 10            return 1;
 11        }
 12        if (left == 1 || right == 1) {
-13            return 2; // COVERED
+13            return 2; 
 14        }
 15        return 0;
 16    }
