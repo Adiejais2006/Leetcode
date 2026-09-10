@@ -1,18 +1,25 @@
-// Last updated: 9/10/2026, 8:47:20 PM
-1class Solution {
-2    int ans = 0;
-3    pair<int,int> dfs(TreeNode* node) {
-4        if (!node) return {0, 0};
-5        auto [ls, lc] = dfs(node->left);
-6        auto [rs, rc] = dfs(node->right);
-7        int sum = ls + rs + node->val;
-8        int cnt = lc + rc + 1;
-9        if (sum / cnt == node->val) ans++;
-10        return {sum, cnt};
-11    }
-12public:
-13    int averageOfSubtree(TreeNode* root) {
-14        dfs(root);
-15        return ans;
+// Last updated: 9/10/2026, 9:34:47 PM
+1
+2class Solution {
+3
+4    pair<int, int> avg(TreeNode* node, int& cnt) {
+5        if (!node)
+6            return {0, 0};
+7        auto left = avg(node->left, cnt);
+8        auto right = avg(node->right, cnt);
+9        int currentSum = left.first + right.first + node->val;
+10        int currentCount = left.second + right.second + 1;
+11        if (currentSum / currentCount == node->val) {
+12            cnt++;
+13        }
+14
+15        return {currentSum, currentCount};
 16    }
-17};
+17
+18public:
+19    int averageOfSubtree(TreeNode* root) {
+20        int cnt = 0;
+21        avg(root, cnt);
+22        return cnt;
+23    }
+24};
