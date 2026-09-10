@@ -1,4 +1,4 @@
-// Last updated: 9/11/2026, 2:13:58 AM
+// Last updated: 9/11/2026, 2:14:51 AM
 1class Solution {
 2    vector<vector<int>> adj;
 3    vector<int> subtreeSize;
