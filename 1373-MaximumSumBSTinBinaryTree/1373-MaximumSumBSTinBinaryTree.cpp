@@ -1,4 +1,4 @@
-// Last updated: 9/11/2026, 1:58:28 PM
+// Last updated: 9/11/2026, 1:58:45 PM
 1class Solution {
 2    struct Node {
 3        bool isBST;
