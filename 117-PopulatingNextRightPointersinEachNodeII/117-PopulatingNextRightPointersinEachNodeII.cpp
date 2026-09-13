@@ -1,26 +1,24 @@
-// Last updated: 9/13/2026, 2:31:56 PM
+// Last updated: 9/13/2026, 2:49:05 PM
 1class Solution {
 2public:
 3    Node* connect(Node* root) {
-4        if (!root)
-5            return root;
-6        queue<Node*> q;
-7        q.push(root);
-8        while (!q.empty()) {
-9            auto size = q.size();
-10           Node* prev = NULL;
-11            while (size--) {
-12                auto node = q.front();
-13                q.pop();
-14              if(prev)prev->next = node;
-15              prev = node;
-16                if (node->left)
-17                    q.push(node->left);
-18                if (node->right)
-19                    q.push(node->right);
-20            }
-21          prev->next = NULL;
-22        }
-23        return root;
-24    }
-25};
+4        Node* curr = root;
+5        while (curr) {
+6            Node* dummy = new Node(0);
+7            Node* tail = dummy;
+8            while (curr) {
+9                if (curr->left) {
+10                    tail->next = curr->left;
+11                    tail = tail->next;
+12                }
+13                if (curr->right) {
+14                    tail->next = curr->right;
+15                    tail = tail->next;
+16                }
+17                curr = curr->next;
+18            }
+19            curr = dummy->next;
+20        }
+21        return root;
+22    }
+23};
