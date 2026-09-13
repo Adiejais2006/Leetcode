@@ -1,29 +1,24 @@
-// Last updated: 9/13/2026, 4:37:30 PM
-1
-2
-3class Solution {
-4    void inorder(vector<int>& arr, TreeNode* root) {
-5        if (root == NULL)
-6            return;
-7        inorder(arr, root->left);
-8        arr.push_back(root->val);
-9        inorder(arr, root->right);
-10    }
-11
-12    void reqrite(vector<int>& arr, TreeNode* root, int& i) {
-13        if (root == NULL)
-14            return;
-15        reqrite(arr, root->left, i);
-16        root->val = arr[i++];
-17        reqrite(arr, root->right, i);
-18    }
-19
-20public:
-21    void recoverTree(TreeNode* root) {
-22        vector<int> arr;
-23        inorder(arr, root);
-24        sort(arr.begin(), arr.end());
-25        int i = 0;
-26        reqrite(arr, root, i);
-27    }
-28};
+// Last updated: 9/13/2026, 4:41:22 PM
+1class Solution {
+2    TreeNode* prev = nullptr;
+3    TreeNode* first = nullptr;
+4    TreeNode* second = nullptr;
+5    void inorder(TreeNode* root) {
+6        if (!root)
+7            return;
+8        inorder(root->left);
+9        if (prev && prev->val > root->val) {
+10            if (!first)
+11                first = prev;
+12            second = root;
+13        }
+14        prev = root;
+15        inorder(root->right);
+16    }
+17
+18public:
+19    void recoverTree(TreeNode* root) {
+20        inorder(root);
+21        swap(first->val, second->val);
+22    }
+23};
