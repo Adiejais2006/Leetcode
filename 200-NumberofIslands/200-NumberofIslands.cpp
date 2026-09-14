@@ -1,43 +1,40 @@
-// Last updated: 9/14/2026, 1:41:13 PM
+// Last updated: 9/14/2026, 1:42:55 PM
 1class Solution {
-2    void bfs(int i, int j, vector<vector<int>>& vis,
-3             vector<vector<char>>& grid) {
-4        queue<pair<int, int>> q;
-5        q.push({i, j});
-6        vis[i][j] = 1;
-7        int dx[] = {-1, 1, 0, 0};
-8        int dy[] = {0, 0, 1, -1};
-9        while (!q.empty()) {
-10            auto it = q.front();
-11            q.pop();
-12            int x = it.first;
-13            int y = it.second;
-14            for (int i = 0; i < 4; i++) {
-15                int nx = x + dx[i];
-16                int ny = y + dy[i];
-17                if (nx >= 0 && nx < vis.size() && ny >= 0 &&
-18                    ny < vis[0].size() && !vis[nx][ny] && grid[nx][ny]=='1') {
-19                    vis[nx][ny] = 1;
-20                    q.push({nx, ny});
-21                }
-22            }
-23        }
-24    }
-25
-26public:
-27    int numIslands(vector<vector<char>>& grid) {
-28        int n = grid.size();
-29        int cnt = 0;
-30        int m = grid[0].size();
-31        vector<vector<int>> vis(n, vector<int>(m, 0));
-32        for (int i = 0; i < n; i++) {
-33            for (int j = 0; j < m; j++) {
-34                if (!vis[i][j] && grid[i][j]=='1') {
-35                    bfs(i, j, vis, grid);
-36                    cnt++;
-37                }
-38            }
-39        }
-40        return cnt;
-41    }
-42};
+2    void bfs(int i, int j, vector<vector<char>>& grid) {
+3        queue<pair<int, int>> q;
+4        q.push({i, j});
+5        int dx[] = {-1, 1, 0, 0};
+6        int dy[] = {0, 0, 1, -1};
+7        while (!q.empty()) {
+8            auto it = q.front();
+9            q.pop();
+10            int x = it.first;
+11            int y = it.second;
+12            for (int i = 0; i < 4; i++) {
+13                int nx = x + dx[i];
+14                int ny = y + dy[i];
+15                if (nx >= 0 && nx < grid.size() && ny >= 0 &&
+16                    ny < grid[0].size() && grid[nx][ny] == '1') {
+17                    grid[nx][ny] = '0';
+18                    q.push({nx, ny});
+19                }
+20            }
+21        }
+22    }
+23
+24public:
+25    int numIslands(vector<vector<char>>& grid) {
+26        int n = grid.size();
+27        int cnt = 0;
+28        int m = grid[0].size();
+29        for (int i = 0; i < n; i++) {
+30            for (int j = 0; j < m; j++) {
+31                if (grid[i][j] == '1') {
+32                    bfs(i, j, grid);
+33                    cnt++;
+34                }
+35            }
+36        }
+37        return cnt;
+38    }
+39};
