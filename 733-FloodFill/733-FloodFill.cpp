@@ -1,35 +1,30 @@
-// Last updated: 7/18/2026, 2:03:34 PM
-class Solution {
-public:
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
-       int n = image.size();
-        int m = image[0].size();
-        // vector<vector<int>> ans = grid;
-        vector<vector<int>> vis(n, vector<int>(m, 0));
-        int initialColor = image[sr][sc];
-        image[sr][sc] = newColor;
-        vis[sr][sc] = 1;
-        queue<pair<int, int>> q;
-        q.push({sr, sc});
-        while (!q.empty()) {
-            auto it = q.front();
-            q.pop();
-            int x = it.first;
-            int y = it.second;
-            int dx[] = {-1, 0, 0, 1};
-            int dy[] = {0, 1, -1, 0};
-            for (int i = 0; i < 4; i++) {
-                int nr = x + dx[i];
-                int nc = y + dy[i];
-                if (nr >= 0 && nr < n && nc >= 0 && nc < m) {
-                    if (image[nr][nc] == initialColor && !vis[nr][nc]) {
-                        vis[nr][nc] = 1;
-                        q.push({nr, nc});
-                        image[nr][nc] = newColor;
-                    }
-                }
-            }
-        }
-        return image; 
-    }
-};
+// Last updated: 9/14/2026, 2:21:40 PM
+1class Solution {
+2public:
+3    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc,
+4                                  int color) {
+5        int n = image.size();
+6        int m = image[0].size();
+7        int origcolor = image[sr][sc];
+8        if(origcolor==color)return image;
+9        queue<pair<int, int>> q;
+10        image[sr][sc] = color;
+11        q.push({sr, sc});
+12        while (!q.empty()) {
+13            auto [x, y] = q.front();
+14            q.pop();
+15            int dx[] = {-1, 1, 0, 0};
+16            int dy[] = {0, 0, -1, 1};
+17            for (int k = 0; k < 4; k++) {
+18                int nx = x + dx[k];
+19                int ny = y + dy[k];
+20                if (nx >= 0 && nx < n && ny >= 0 && ny < m &&
+21                    image[nx][ny] == origcolor) {
+22                    image[nx][ny] = color;
+23                    q.push({nx, ny});
+24                }
+25            }
+26        }
+27        return image;
+28    }
+29};
