@@ -1,4 +1,4 @@
-// Last updated: 9/15/2026, 6:01:38 PM
+// Last updated: 9/15/2026, 6:03:42 PM
 1class Solution {
 2public:
 3    int minimumEffortPath(vector<vector<int>>& heights) {
@@ -16,17 +16,17 @@
 15            q.pop();
 16            int x = cord.first;
 17            int y = cord.second;
-18            int currentDiff = dist[x][y];
+18            int currenteffort = dist[x][y];
 19            int dx[] = {-1, 1, 0, 0};
 20            int dy[] = {0, 0, -1, 1};
 21            for (int i = 0; i < 4; i++) {
 22                int nx = x + dx[i];
 23                int ny = y + dy[i];
 24                if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
-25                    int newDiff = abs(heights[nx][ny] - heights[x][y]);
-26                    int newEffort = max(currentDiff, newDiff);
-27                    if (dist[nx][ny] > newEffort) {
-28                        dist[nx][ny] = newEffort;
+25                    int neweffort = abs(heights[nx][ny] - heights[x][y]);
+26                    int finaleffect = max(currenteffort, neweffort);
+27                    if (dist[nx][ny] > finaleffect) {
+28                        dist[nx][ny] = finaleffect;
 29                        q.push({dist[nx][ny], {nx, ny}});
 30                    }
 31                }
