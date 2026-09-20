@@ -1,58 +1,61 @@
-// Last updated: 9/20/2026, 2:41:15 PM
-1class Solution {
-2    void bfs(int src, vector<vector<int>>& adj, vector<int>& vis,
-3             long long& nodes, long long& degreeSum) {
-4
-5        queue<int> q;
-6        q.push(src);
-7        vis[src] = 1;
-8
-9        while (!q.empty()) {
-10            int node = q.front();
-11            q.pop();
-12            nodes++;
-13            degreeSum += adj[node].size();
-14            for (auto it : adj[node]) {
-15                if (!vis[it]) {
-16                    vis[it] = 1;
-17                    q.push(it);
-18                }
-19            }
-20        }
-21    }
-22
-23public:
-24    int countCompleteComponents(int n, vector<vector<int>>& edges) {
-25
-26        vector<vector<int>> adj(n);
-27
-28        for (auto& e : edges) {
-29            int u = e[0];
-30            int v = e[1];
-31
-32            adj[u].push_back(v);
-33            adj[v].push_back(u);
-34        }
-35
-36        vector<int> vis(n, 0);
-37        int cnt = 0;
-38
-39        for (int i = 0; i < n; i++) {
-40
-41            if (!vis[i]) {
-42
-43                long long nodes = 0;
-44                long long degreeSum = 0;
+// Last updated: 9/20/2026, 3:33:16 PM
+1class DisjointSet {
+2public:
+3    vector<int> size;
+4    vector<int> parent;
+5    vector<int> edgeCount;
+6    DisjointSet(int n) {
+7        size.resize(n + 1, 1);
+8        parent.resize(n + 1);
+9        edgeCount.resize(n + 1, 0);
+10        for (int i = 0; i <= n; i++) {
+11            parent[i] = i;
+12        }
+13    }
+14    int find(int node) {
+15        if (node == parent[node])
+16            return node;
+17
+18        return parent[node] = find(parent[node]);
+19    }
+20    void unionsize(int u, int v) {
+21        int pu = find(u);
+22        int pv = find(v);
+23
+24        if (pu == pv) {
+25            edgeCount[pu]++;
+26            return;
+27        }
+28
+29        if (size[pu] > size[pv]) {
+30            parent[pv] = pu;
+31            size[pu] += size[pv];
+32            edgeCount[pu] += edgeCount[pv]+1;
+33        } else {
+34            parent[pu] = pv;
+35            size[pv] += size[pu];
+36            edgeCount[pv] += edgeCount[pu]+1;
+37        }
+38    }
+39};
+40class Solution {
+41public:
+42    int countCompleteComponents(int n, vector<vector<int>>& edges) {
+43        DisjointSet ds(n);
+44        for (auto it : edges) {
 45
-46                bfs(i, adj, vis, nodes, degreeSum);
-47
-48                long long edgeCount = degreeSum / 2;
-49
-50                if (edgeCount == nodes * (nodes - 1) / 2)
-51                    cnt++;
-52            }
-53        }
-54
-55        return cnt;
-56    }
-57};
+46            int u = it[0];
+47            int v = it[1];
+48
+49            ds.unionsize(u, v);
+50        }
+51        int cnt = 0 ;
+52        for(int i =0 ; i<n ; i++){
+53            if(ds.parent[i]==i){
+54            int size = ds.size[i];
+55            int edge = ds.edgeCount[i];
+56            if((size*(size-1)/2)==edge)cnt++;}
+57        }
+58        return cnt;
+59    }
+60};
