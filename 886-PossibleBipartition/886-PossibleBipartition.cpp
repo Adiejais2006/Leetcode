@@ -1,4 +1,4 @@
-// Last updated: 9/20/2026, 4:03:30 PM
+// Last updated: 9/20/2026, 4:03:49 PM
 1class Solution
 2{
 3    bool bfs(int src, vector<int> &color, vector<int> adj[])
