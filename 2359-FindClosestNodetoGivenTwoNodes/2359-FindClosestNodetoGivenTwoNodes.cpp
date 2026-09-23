@@ -1,28 +1,32 @@
-// Last updated: 9/23/2026, 3:03:43 PM
+// Last updated: 9/23/2026, 3:07:03 PM
 1class Solution {
 2public:
-3    void dfs(int current, int distance, const vector<int>& edges, vector<int>& distances) {
-4        while (current != -1 && distances[current] == -1) {
-5            distances[current] = distance++;
-6            current = edges[current];
-7        }
-8    }
-9
-10    int closestMeetingNode(vector<int>& edges, int start1, int start2) {
-11        int res = -1, Min_Of_Max = INT_MAX, n = edges.size();
-12        vector<int> dist1(n, -1), dist2(n, -1);
-13        dfs(start1, 0, edges, dist1);
-14        dfs(start2, 0, edges, dist2);
-15
-16        for (int i = 0; i < n; i++) {
-17            if (dist1[i] >= 0 && dist2[i] >= 0) {
-18                int maxDist = max(dist1[i], dist2[i]);
-19                if (maxDist < Min_Of_Max) {
-20                    Min_Of_Max = maxDist;
-21                    res = i;
-22                }
-23            }
-24        }
-25        return res;
-26    }
-27};
+3    vector<int> getDist(vector<int>& edges, int start) {
+4        int n = edges.size();
+5        vector<int> dist(n, -1);
+6        int curr = start;
+7        int d = 0;
+8        while (curr != -1 && dist[curr] == -1) {
+9            dist[curr] = d++;
+10            curr = edges[curr];
+11        }
+12        return dist;
+13    }
+14    int closestMeetingNode(vector<int>& edges, int node1, int node2) {
+15        int n = edges.size();
+16        vector<int> dist1 = getDist(edges, node1);
+17        vector<int> dist2 = getDist(edges, node2);
+18        int ans = -1;
+19        int minDist = INT_MAX;
+20        for (int i = 0; i < n; i++) {
+21            if (dist1[i] == -1 || dist2[i] == -1)
+22                continue;
+23            int currDist = max(dist1[i], dist2[i]);
+24            if (currDist < minDist) {
+25                minDist = currDist;
+26                ans = i;
+27            }
+28        }
+29        return ans;
+30    }
+31};
