@@ -1,18 +1,15 @@
-// Last updated: 9/24/2026, 12:04:00 PM
+// Last updated: 9/24/2026, 12:06:40 PM
 1class Solution {
-2    int func(int n, vector<int>& dp) {
-3        if (n == 0)
-4            return 0;
-5        if (n == 1)
-6            return 1;
-7        if (dp[n] != -1)
-8            return dp[n];
-9        return dp[n] = func(n - 1, dp) + func(n - 2, dp);
-10    }
-11
-12public:
-13    int fib(int n) {
-14        vector<int> dp(n + 1, -1);
-15        return func(n, dp);
-16    }
-17};
+2
+3public:
+4    int fib(int n) {
+5        if(n==0)return 0;
+6        vector<int> dp(n + 1, 0);
+7        dp[0] = 0;
+8        dp[1] = 1;
+9        for (int i = 2; i <= n; i++) {
+10            dp[i] = dp[i - 1]+ dp[i - 2];
+11        }
+12        return dp[n];
+13    }
+14};
