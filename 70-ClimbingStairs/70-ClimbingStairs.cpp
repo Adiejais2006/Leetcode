@@ -1,20 +1,15 @@
-// Last updated: 9/24/2026, 12:15:43 PM
+// Last updated: 9/24/2026, 12:20:20 PM
 1class Solution {
-2    int func(int n, vector<int>& dp) {
-3        if (n < 0)
-4            return 0;
-5        if (n == 0) {
-6            return 1;
-7        }
-8        if(dp[n]!=-1)return dp[n];
-9        int way1 = func(n - 1, dp);
-10        int way2 = func(n - 2, dp);
-11        return dp[n] =way1 + way2;
-12    }
-13
-14public:
-15    int climbStairs(int n) {
-16        vector<int> dp(n+1, -1);
-17        return func(n, dp);
-18    }
-19};
+2public:
+3    int climbStairs(int n) {
+4        vector<int> dp(n + 1, 0);
+5        dp[0] = 1;
+6        dp[1] = 1 ;
+7        for (int i = 2; i <= n; i++) {
+8            int way1 =dp[i - 1];
+9            int way2 = dp[i - 2];
+10           dp[i] = way1 + way2;
+11        }
+12        return dp[n];
+13    }
+14};
