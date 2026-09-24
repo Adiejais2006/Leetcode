@@ -1,4 +1,4 @@
-// Last updated: 9/24/2026, 6:33:45 PM
+// Last updated: 9/24/2026, 6:33:53 PM
 1class Solution {
 2    int memo(int i, int end, vector<int>& nums, vector<int>& dp) {
 3        int n = i - end + 1;
@@ -17,19 +17,12 @@
 16public:
 17    int rob(vector<int>& nums) {
 18        int n = nums.size();
-19
-20        if (n == 1)
-21            return nums[0];
-22
-23        vector<int> dp1(n, -1);
-24        vector<int> dp2(n, -1);
-25
-26        // Skip last → [0 ... n-2]
-27        int skipLast = memo(n - 2, 0, nums, dp1);
-28
-29        // Skip first → [1 ... n-1]
-30        int skipFirst = memo(n - 1, 1, nums, dp2);
-31
-32        return max(skipFirst, skipLast);
-33    }
-34};
+19        if (n == 1)
+20            return nums[0];
+21        vector<int> dp1(n, -1);
+22        vector<int> dp2(n, -1);
+23        int skipLast = memo(n - 2, 0, nums, dp1);
+24        int skipFirst = memo(n - 1, 1, nums, dp2);
+25        return max(skipFirst, skipLast);
+26    }
+27};
