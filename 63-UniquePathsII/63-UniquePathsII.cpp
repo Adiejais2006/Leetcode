@@ -1,4 +1,4 @@
-// Last updated: 9/25/2026, 5:21:31 PM
+// Last updated: 9/25/2026, 5:21:38 PM
 1class Solution {
 2    int func(int i, int j, vector<vector<int>>& dp,
 3             vector<vector<int>>& obstacleGrid) {
