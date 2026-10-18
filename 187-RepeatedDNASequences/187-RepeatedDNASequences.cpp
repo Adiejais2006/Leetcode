@@ -1,4 +1,4 @@
-// Last updated: 10/18/2026, 10:31:31 PM
+// Last updated: 10/18/2026, 10:34:18 PM
 1class Solution {
 2public:
 3    vector<string> findRepeatedDnaSequences(string s) {
@@ -17,14 +17,12 @@
 16        while (r < n) {
 17            temp.erase(temp.begin());
 18            temp += s[r];
-19                mpp[temp]++;
-20            if (mpp.find(temp) != mpp.end()) {
-21                if(mpp[temp]==2)
-22                ans.push_back(temp);
-23            }
-24            l++;
-25            r++;
-26        }
-27        return ans;
-28    }
-29};  
+19            mpp[temp]++;
+20            if (mpp[temp] == 2)
+21                ans.push_back(temp);
+22            l++;
+23            r++;
+24        }
+25        return ans;
+26    }
+27};
