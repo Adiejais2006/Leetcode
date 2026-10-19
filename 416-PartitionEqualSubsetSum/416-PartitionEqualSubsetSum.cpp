@@ -1,31 +1,27 @@
-// Last updated: 7/18/2026, 2:04:38 PM
-class Solution {
-
-public:
-    bool canPartition(vector<int>& nums) {
-        int n = nums.size();
-        int sum = 0;
-        for (int i = 0; i < n; i++)
-            sum += nums[i];
-        vector<vector<int>> dp(n + 1, vector<int>(sum + 1, 0));
-        if (sum % 2 == 1)
-            return false;
-        for (int i = 0; i < n; i++)
-            dp[i][0] = true;
-
-        if (nums[0] <= sum/2)
-            dp[0][nums[0]] = true;
-
-        for (int ind = 1; ind < n; ind++) {
-            for (int target = 1; target <= sum / 2; target++) {
-                bool pick = false;
-                if (nums[ind] <= target)
-                    pick = dp[ind - 1][target - nums[ind]];
-                bool notpick = dp[ind - 1][target];
-                dp[ind][target] = pick || notpick;
-            }
-        }
-
-        return dp[n - 1][sum / 2];
-    }
-};
+// Last updated: 10/19/2026, 11:48:07 AM
+1class Solution {
+2    bool func(int i, int target, vector<int>& nums, vector<vector<int>>& dp) {
+3        if (target == 0)
+4            return true;
+5        if (i == 0 ) return target == nums[i];
+6        if (dp[i][target] != -1)
+7            return dp[i][target];
+8        bool nottake = func(i - 1, target, nums, dp);
+9        bool take = 0;
+10        if (target >= nums[i])
+11            take = func(i - 1, target - nums[i], nums, dp);
+12        return dp[i][target] = take || nottake;
+13    }
+14
+15public:
+16    bool canPartition(vector<int>& nums) {
+17        int sum = 0;
+18        int n = nums.size();
+19        for (int i = 0; i < n; i++)
+20            sum += nums[i];
+21        if (sum % 2 == 1)
+22            return false;
+23        vector<vector<int>> dp(n, vector<int>(sum / 2 + 1, -1));
+24        return func(n - 1, sum / 2, nums, dp);
+25    }
+26};
