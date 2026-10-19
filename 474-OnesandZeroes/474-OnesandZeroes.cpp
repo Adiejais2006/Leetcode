@@ -1,4 +1,4 @@
-// Last updated: 10/19/2026, 2:26:54 PM
+// Last updated: 10/19/2026, 2:30:52 PM
 1class Solution {
 2public:
 3    int findMaxForm(vector<string>& strs, int m, int n) {
@@ -15,29 +15,29 @@
 14            }
 15            ans.push_back({z, o});
 16        }
-17        vector<vector<vector<int>>> dp(
-18            s, vector<vector<int>>(m + 1, vector<int>(n + 1, 0)));
+17        vector<vector<int>> prev(m + 1, vector<int>(n + 1, 0));
+18        vector<vector<int>> curr(m + 1, vector<int>(n + 1, 0));
 19        for (int M = 0; M <= m; M++) {
 20            for (int N = 0; N <= n; N++) {
 21                if (ans[0].first <= M && ans[0].second <= N)
-22                    dp[0][M][N] = 1;
+22                    prev[M][N] = 1;
 23                else
-24                    dp[0][M][N] = 0;
+24                    prev[M][N] = 0;
 25            }
 26        }
 27        for (int i = 1; i < s; i++) {
 28            for (int M = 0; M <= m; M++) {
 29                for (int N = 0; N <= n; N++) {
-30                    int nottake = dp[i - 1][M][N];
+30                    int nottake = prev[M][N];
 31                    int take = 0;
 32                    if (ans[i].first <= M && ans[i].second <= N) {
-33                        take =
-34                            1 + dp[i - 1][M - ans[i].first][N - ans[i].second];
-35                    }
-36                    dp[i][M][N] = max(take, nottake);
-37                }
-38            }
+33                        take = 1 + prev[M - ans[i].first][N - ans[i].second];
+34                    }
+35                    curr[M][N] = max(take, nottake);
+36                }
+37            }
+38            prev = curr;
 39        }
-40        return dp[s - 1][m][n];
+40        return prev[m][n];
 41    }
 42};
