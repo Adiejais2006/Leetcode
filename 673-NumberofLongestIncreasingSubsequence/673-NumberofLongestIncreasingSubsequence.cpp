@@ -1,33 +1,34 @@
-// Last updated: 10/20/2026, 8:57:48 PM
-1class Solution {
-2public:
-3    int findNumberOfLIS(vector<int>& nums) {
-4        int n = nums.size();
-5        vector<int> dp(n, 1);
-6        vector<int> count(n, 1);
-7        int maxi = 1;
-8        for (int i = 0; i < n; i++) {
-9            int cnt = 0;
+// Last updated: 10/20/2026, 8:59:23 PM
+1
+2class Solution {
+3public:
+4    int findNumberOfLIS(vector<int>& nums) {
+5        int n = nums.size();
+6        vector<int> dp(n, 1);
+7        vector<int> count(n, 1);
+8        int maxLen = 1;
+9        for (int i = 0; i < n; i++) {
 10            for (int j = 0; j < i; j++) {
-11                if (nums[i] > nums[j]) {
-12                    if (dp[i] < dp[j] + 1) {
+11                if (nums[j] < nums[i]) {
+12                    if (dp[j] + 1 > dp[i]) {
 13                        dp[i] = dp[j] + 1;
 14                        count[i] = count[j];
 15                    }
-16
-17                    else if (dp[i] == dp[j] + 1)
-18                        count[i] += count[j];
+16                    else if (dp[j] + 1 == dp[i]) {
+17                        count[i] += count[j];
+18                    }
 19                }
 20            }
-21            if (dp[i] > maxi) {
-22                maxi = dp[i];
-23            }
-24        }
-25        int cnt = 0;
-26        for (int i = 0; i < n; i++) {
-27            if (dp[i] == maxi)
-28                cnt += count[i];
-29        }
-30        return cnt;
-31    }
-32};
+21            maxLen = max(maxLen, dp[i]);
+22        }
+23        int ans = 0;
+24        for (int i = 0; i < n; i++) {
+25            if (dp[i] == maxLen) {
+26                ans += count[i];
+27            }
+28        }
+29        return ans;
+30    }
+31};
+32
+33
