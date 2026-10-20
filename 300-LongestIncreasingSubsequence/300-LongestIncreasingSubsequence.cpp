@@ -1,18 +1,20 @@
-// Last updated: 7/18/2026, 2:04:59 PM
-class Solution {
-public:
-    int lengthOfLIS(vector<int>& nums) {
-          int n = nums.size();
-        vector<int> dp(n, 1);
-        int maxi = 1;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < i; j++) {
-                if (nums[i] > nums[j]) {
-                    dp[i] = max(dp[i], dp[j] + 1);
-                }
-                maxi = max(maxi,dp[i]);
-            }
-        }
-        return maxi;
-    }
-};
+// Last updated: 10/20/2026, 8:04:28 PM
+1class Solution {
+2public:
+3    int lengthOfLIS(vector<int>& nums) {
+4         int n = nums.size();
+5        vector<int> before(n + 1, 0);
+6        vector<int> curr(n + 1, 0);
+7        for (int ind = n - 1; ind >= 0; ind--) {
+8            for (int pind = ind - 1; pind >= -1; pind--) {
+9                int notpick = before[pind + 1];
+10                int pick = 0;
+11                if (pind == -1 || nums[ind] > nums[pind])
+12                    pick = 1 + before[ind + 1];
+13               curr[pind + 1] = max(pick, notpick);
+14            }
+15            before = curr;
+16        }
+17        return before[0];
+18    }
+19};
