@@ -1,24 +1,29 @@
-// Last updated: 10/20/2026, 4:38:17 PM
+// Last updated: 10/20/2026, 4:46:25 PM
 1class Solution {
 2public:
-3    int func(int i, vector<int>& nums, int target,
-4             map<pair<int, int>, int>& dp) {
-5        if (i == 0) {
-6            int ways = 0;
-7            if (target == -nums[0])
-8                ways++;
-9            if (target == nums[0])
-10                ways++;
-11            return ways;
-12        }
-13        if (dp.find({i, target}) != dp.end())
-14            return dp[{i, target}];
-15        int plus = func(i - 1, nums, target - nums[i], dp);
-16        int minus = func(i - 1, nums, target + nums[i], dp);
-17        return dp[{i, target}] = plus + minus;
-18    }
-19    int findTargetSumWays(vector<int>& nums, int target) {
-20        map<pair<int, int>, int> dp;
-21        return func(nums.size() - 1, nums, target, dp);
-22    }
-23};
+3    int findTargetSumWays(vector<int>& nums, int target) {
+4        int n = nums.size();
+5        int sum = 0;
+6        for (auto it : nums)
+7            sum += it;
+8        if (abs(target) > sum)
+9            return 0;
+10        map<pair<int, int>, int> dp;
+11        for (int j = -sum; j <= sum; j++) {
+12            int ways = 0;
+13            if (j == -nums[0])
+14                ways++;
+15            if (j == nums[0])
+16                ways++;
+17            dp[{0, j}] = ways;
+18        }
+19        for (int i = 1; i < n; i++) {
+20            for (int j = -sum; j <= sum; j++) {
+21                int plus = dp[{i - 1, j - nums[i]}];
+22                int minus = dp[{i - 1, j + nums[i]}];
+23                dp[{i, j}] = plus + minus;
+24            }
+25        }
+26        return dp[{n - 1, target}];
+27    }
+28};
