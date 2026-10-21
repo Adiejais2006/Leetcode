@@ -1,15 +1,15 @@
-// Last updated: 10/21/2026, 6:07:53 PM
+// Last updated: 10/21/2026, 6:10:52 PM
 1class Solution {
-2public:
-3    int maxProfit(vector<int>& prices) {
-4         int mino = 1e9;
-5        int ans = -1;
-6        for (int i = 0; i < prices.size(); i++) {
-7            if (prices[i] < mino) mino = prices[i];
-8            int profit = prices[i] - mino;
-9            ans = max(ans, profit);
-10        }
-11
-12        return ans;
+2
+3public:
+4    int maxProfit(vector<int>& prices) {
+5        int n = prices.size();
+6        int ans = -1;
+7        int mini = 1e9;
+8        for (int i = 0; i < n; i++) {
+9            mini = min(mini, prices[i]);
+10            ans = max(ans, prices[i] - mini);
+11        }
+12        return ans == -1 ? 0 : ans;
 13    }
 14};
