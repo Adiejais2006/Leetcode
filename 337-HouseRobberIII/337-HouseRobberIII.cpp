@@ -1,19 +1,23 @@
-// Last updated: 10/21/2026, 10:25:57 PM
-1class Solution {
-2    int func(TreeNode* root,unordered_map<TreeNode*,int> &mpp) {
-3        if (root == nullptr)
-4            return  0;
-5        if(mpp.find(root)!=mpp.end()) return mpp[root];
-6        int nottake = func(root->left ,mpp) + func(root->right ,mpp);
-7        int take = root->val + (root->left ? func(root->left->left ,mpp) : 0) +
-8                   (root->left ? func(root->left->right ,mpp) : 0) +
-9                   (root->right ? func(root->right->left ,mpp) : 0) +
-10                   (root->right ? func(root->right->right ,mpp) : 0);
-11        return mpp[root] =  max(take, nottake);
-12    }
-13
-14public:
-15    int rob(TreeNode* root) { 
-16        unordered_map<TreeNode*,int> mpp;
-17        return func(root ,mpp); }
-18};
+// Last updated: 10/21/2026, 10:36:27 PM
+1
+2class Solution {
+3    pair<int, int> func(TreeNode* root) {
+4        if (!root)
+5            return {0, 0};
+6        auto left = func(root->left);
+7        auto right = func(root->right);
+8        auto skip =
+9            max(left.first, left.second) +  max(right.first, right.second);
+10        ;
+11        auto take = root->val + left.second + right.second;
+12        ;
+13        return {take, skip};
+14    }
+15
+16public:
+17    int rob(TreeNode* root) {
+18        
+19        auto a = func(root);
+20        return max(a.first, a.second);
+21    }
+22};
