@@ -1,29 +1,27 @@
-// Last updated: 10/21/2026, 1:22:32 PM
+// Last updated: 10/21/2026, 1:30:18 PM
 1class Solution {
-2    int func(int i, int j, string s1, string s2, vector<vector<int>>& dp) {
-3        if (i < 0 && j >= 0)
-4            return j + 1;
-5        if (j < 0 && i >= 0) {
-6            return i + 1;
-7        }
-8        if (i < 0 || j < 0)
-9            return 0;
-10        if (dp[i][j] != -1)
-11            return dp[i][j];
-12        if (s1[i] == s2[j]) {
-13            return dp[i][j] = func(i - 1, j - 1, s1, s2, dp);
-14        }
-15        int replace = 1 + func(i - 1, j - 1, s1, s2, dp);
-16        int del = 1 + func(i - 1, j, s1, s2, dp);
-17        int insert = 1 + func(i, j - 1, s1, s2, dp);
-18        return dp[i][j] = min(replace, min(del, insert));
-19    }
-20
-21public:
-22    int minDistance(string word1, string word2) {
-23        int n = word1.size();
-24        int m = word2.size();
-25        vector<vector<int>> dp(n, vector<int>(m, -1));
-26        return func(n - 1, m - 1, word1, word2, dp);
-27    }
-28};
+2public:
+3    int minDistance(string s1, string s2) {
+4        int n = s1.size();
+5        int m = s2.size();
+6        vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+7        for (int i = 0; i <= n; i++)
+8            dp[i][0] = i;
+9        for (int j = 0; j <= m; j++)
+10            dp[0][j] = j;
+11        for (int i = 1; i <= n; i++) {
+12            for (int j = 1; j <= m; j++) {
+13                if (s1[i - 1] == s2[j - 1]) {
+14                    dp[i][j] = dp[i - 1][j - 1];
+15                } else {
+16                    int replace = 1 + dp[i - 1][j - 1];
+17                    int del = 1 + dp[i - 1][j];
+18                    int insert = 1 + dp[i][j - 1];
+19
+20                    dp[i][j] = min({replace, del, insert});
+21                }
+22            }
+23        }
+24        return dp[n][m];
+25    }
+26};
