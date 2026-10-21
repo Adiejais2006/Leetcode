@@ -1,29 +1,28 @@
-// Last updated: 7/18/2026, 2:04:11 PM
-class Solution {int lcs(string s1, string s2) {
-        int n = s1.size(), m = s2.size();
-        vector<vector<int>> dp(n + 1, vector<int>(m + 1));
-        for (int i = 0; i < n + 1; i++) {
-            dp[i][0] = 0;
-        }
-        for (int j = 0; j < m + 1; j++) {
-            dp[0][j] = 0;
-        }
-        for (int ind1 = 1; ind1 < n + 1; ind1++) {
-            for (int ind2 = 1; ind2 < m + 1; ind2++) {
-                if (s1[ind1 - 1] == s2[ind2 - 1])
-                    dp[ind1][ind2] = 1 + dp[ind1 - 1][ind2 - 1];
-
-                else
-                    dp[ind1][ind2] =
-                        max(dp[ind1 - 1][ind2], dp[ind1][ind2 - 1]);
-            }
-        }
-        return dp[n][m];
-    }
-public:
-    int longestPalindromeSubseq(string s) {
-         string p = s;
-        reverse(p.begin(),p.end());
-      return  lcs(s,p);
-    }
-};
+// Last updated: 10/21/2026, 11:40:57 PM
+1class Solution {
+2    int longestCommonSubsequence(string s1, string s2) {
+3        int n = s1.size();
+4        int m = s2.size();
+5        vector<int> prev(m + 1, 0);
+6        vector<int> curr(m + 1, 0);
+7        for (int i = 1; i <= n; i++) {
+8            for (int j = 1; j <= m; j++) {
+9                if (s1[i - 1] == s2[j - 1]) {
+10                    curr[j] = 1 + prev[j - 1];
+11                } else {
+12                    curr[j] = max(prev[j], curr[j - 1]);
+13                }
+14            }
+15            prev = curr;
+16        }
+17        return prev[m];
+18    }
+19
+20public:
+21    int longestPalindromeSubseq(string s) {
+22        string orig = s;
+23        reverse(orig.begin() , orig.end());
+24        int a = longestCommonSubsequence(s,orig);
+25        return a;
+26    }
+27};
