@@ -1,4 +1,4 @@
-// Last updated: 10/22/2026, 4:04:52 PM
+// Last updated: 10/22/2026, 4:06:04 PM
 1class Solution {
 2public:
 3    int maximalSquare(vector<vector<char>>& matrix) {
