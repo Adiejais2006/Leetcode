@@ -1,22 +1,25 @@
-// Last updated: 10/22/2026, 4:33:39 PM
+// Last updated: 10/22/2026, 4:36:50 PM
 1class Solution {
-2    int func(int i , string s, vector<int> &dp){
-3        if(i>s.size())return 0 ;
-4        if(i==s.size())return 1 ; 
-5        if(s[i]=='0')return 0 ;
-6        if(dp[i]!=-1)return dp[i];
-7        int one = func(i+1 ,s,dp);
-8        int two = 0 ; 
-9        if(i+1<s.size()){
-10            int a = (s[i]-'0')*10 + (s[i+1]-'0');
-11            if(a<=26)  two = func(i+2 , s,dp);
-12        }
-13        return dp[i] =  one + two ;
-14    }   
-15public:
-16    int numDecodings(string s) {
-17        int n = s.size();
-18        vector<int> dp(n+1 ,-1);
-19        return func(0 ,s,dp);
-20    }   
-21};
+2
+3public:
+4    int numDecodings(string s) {
+5        int n = s.size();
+6        vector<int> dp(n + 2, 0);
+7        dp[n] = 1;
+8        for (int i = n - 1; i >= 0; i--) {
+9
+10            int one = dp[i + 1];
+11            int two = 0;
+12
+13            if (i + 1 < s.size()) {
+14                int a = (s[i] - '0') * 10 + (s[i + 1] - '0');
+15                if (a <= 26)
+16                    two = dp[i + 2];
+17            }
+18            dp[i] = one + two;
+19            if (s[i] == '0')
+20                dp[i] = 0;
+21        }
+22        return dp[0];
+23    }
+24};
