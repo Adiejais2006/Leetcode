@@ -1,28 +1,21 @@
-// Last updated: 10/22/2026, 9:36:22 PM
+// Last updated: 10/22/2026, 9:43:20 PM
 1class Solution {
-2    bool func(int i, int j, string& s, string& p,
-3              vector<vector<int>>& dp) {
-4        if (j == p.size())
-5            return i == s.size();
-6        if (dp[i][j] != -1)
-7            return dp[i][j];
-8        bool firstMatch = i < s.size() &&
-9                          (s[i] == p[j] || p[j] == '.');
-10        if (j + 1 < p.size() && p[j + 1] == '*') {
-11            return dp[i][j] =
-12                func(i, j + 2, s, p, dp) ||
-13                (firstMatch && func(i + 1, j, s, p, dp));
-14        }
-15        if (firstMatch)
-16            return dp[i][j] = func(i + 1, j + 1, s, p, dp);
-17        return dp[i][j] = false;
+2
+3public:
+4    bool isMatch(string s, string p) {
+5        int n = s.size(), m = p.size();
+6        vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+7        dp[n][m] = true;
+8        for (int i = n; i >= 0; i--) {
+9            for (int j = m - 1; j >= 0; j--) {
+10                bool firstMatch = i < n && (s[i] == p[j] || p[j] == '.');
+11                if (j + 1 < m && p[j + 1] == '*') {
+12                    dp[i][j] = dp[i][j + 2] || (firstMatch && dp[i + 1][j]);
+13                } else if (firstMatch)
+14                    dp[i][j] = dp[i + 1][j + 1];
+15            }
+16        }
+17        return dp[0][0];
 18    }
-19public:
-20    bool isMatch(string s, string p) {
-21        int n = s.size(), m = p.size();
-22        vector<vector<int>> dp(n + 1, vector<int>(m + 1, -1));
-23        return func(0, 0, s, p, dp);
-24    }
-25};
-26
-27
+19};
+20
