@@ -1,23 +1,25 @@
-// Last updated: 10/22/2026, 4:03:40 PM
+// Last updated: 10/22/2026, 4:04:52 PM
 1class Solution {
-2
-3public:
-4    int maximalSquare(vector<vector<char>>& matrix) {
-5        int n = matrix.size();
-6        int m = matrix[0].size();
-7        vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
-8        int ans = 0;
+2public:
+3    int maximalSquare(vector<vector<char>>& matrix) {
+4        int n = matrix.size();
+5        int m = matrix[0].size();
+6        vector<int> prev(m + 1, 0);
+7        vector<int> curr(m + 1, 0);
+8        int maxSide = 0;
 9        for (int i = 1; i <= n; i++) {
 10            for (int j = 1; j <= m; j++) {
 11                if (matrix[i - 1][j - 1] == '1') {
-12                    int top = dp[i - 1][j];
-13                    int left = dp[i][j - 1];
-14                    int diagonal = dp[i - 1][j - 1];
-15                    dp[i][j] = 1 + min(top, min(left, diagonal));
-16                    ans = max(ans, dp[i][j]);
-17                }
-18            }
+12                    curr[j] = 1 + min({prev[j], curr[j - 1], prev[j - 1]});
+13                    maxSide = max(maxSide, curr[j]);
+14                } else {
+15                    curr[j] = 0;
+16                }
+17            }
+18            prev = curr;
 19        }
-20        return ans*ans;
-21    }
-22};
+20
+21        return maxSide * maxSide;
+22    }
+23};
+24
