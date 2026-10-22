@@ -1,4 +1,4 @@
-// Last updated: 9/24/2026, 8:56:13 PM
+// Last updated: 10/22/2026, 10:12:03 PM
 1class Solution {
 2public:
 3    int deleteAndEarn(vector<int>& nums) {
