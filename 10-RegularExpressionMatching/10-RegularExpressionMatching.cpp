@@ -1,22 +1,19 @@
-// Last updated: 7/18/2026, 2:08:01 PM
-class Solution {
-public:
-    bool isMatch(string s, string p) {
-        int m = s.size(), n = p.size();
-        vector<vector<bool>> dp(m + 1, vector<bool>(n + 1, false));
-        dp[m][n] = true;  
-        for (int i = m; i >= 0; i--) {
-            for (int j = n - 1; j >= 0; j--) {
-                bool firstMatch = (i < m && (s[i] == p[j] || p[j] == '.'));
-
-                if (j + 1 < n && p[j + 1] == '*') {
-                    dp[i][j] = dp[i][j + 2] || (firstMatch && dp[i + 1][j]);
-                } else {
-                    dp[i][j] = firstMatch && dp[i + 1][j + 1];
-                }
-            }
-        }
-
-        return dp[0][0];
-    }
-};
+// Last updated: 10/22/2026, 9:30:57 PM
+1
+2class Solution {
+3    bool func(int i, int j, string& s, string& p) {
+4        if (j == p.size())
+5            return i == s.size();
+6        bool firstMatch = i < s.size() && (s[i] == p[j] || p[j] == '.');
+7        if (j + 1 < p.size() && p[j + 1] == '*') {
+8            return func(i, j + 2, s, p) || (firstMatch && func(i + 1, j, s, p));
+9        }
+10        if (firstMatch)
+11            return func(i + 1, j + 1, s, p);
+12        return false;
+13    }
+14
+15public:
+16    bool isMatch(string s, string p) { return func(0, 0, s, p); }
+17};
+18
