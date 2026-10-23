@@ -1,30 +1,27 @@
-// Last updated: 10/23/2026, 12:43:57 PM
-1class Solution {
-2    bool isleaf(TreeNode* root) {
-3        if (root->left == NULL && root->right == NULL)
-4            return true;
-5        return false;
-6    }
-7    void func(TreeNode* root, int& sum, int currentdepth, int &maxdepth) {
-8        if (root == NULL)
-9            return;
-10        if (isleaf(root)) {
-11            if (currentdepth > maxdepth) {
-12                maxdepth = currentdepth;
-13                sum = root->val;
-14            } else if (currentdepth == maxdepth)
-15                sum += root->val;
-16            return; 
-17        }
-18        func(root->left, sum, currentdepth + 1, maxdepth);
-19        func(root->right, sum, currentdepth + 1, maxdepth);
-20    }
-21
-22public:
-23    int deepestLeavesSum(TreeNode* root) {
-24        int sum = 0;
-25        int maxdepth = 0;
-26        func(root, sum, 0, maxdepth);
-27        return sum;
-28    }
-29};
+// Last updated: 10/23/2026, 12:48:05 PM
+1
+2class Solution {
+3public:
+4    int deepestLeavesSum(TreeNode* root) {
+5        int sum = 0;
+6        queue<TreeNode*> q;
+7        q.push(root);
+8        int ans = 0;
+9        while (!q.empty()) {
+10            int size = q.size();
+11            sum = 0;
+12            for (int i = 0; i< size; i++) {
+13                auto a = q.front();
+14                q.pop();
+15                sum += a->val;
+16                if (a->left) {
+17                    q.push(a->left);
+18                }
+19                if (a->right) {
+20                    q.push(a->right);
+21                }
+22            }
+23        }
+24        return sum;
+25    }
+26};
