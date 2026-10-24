@@ -1,18 +1,28 @@
-// Last updated: 10/24/2026, 2:05:53 PM
-1class Solution {
-2public:
-3    int minOperations(vector<int>& A, int x) {
-4        int k = reduce(A.begin(), A.end()) - x, n = A.size();
-5        if (k < 0) return -1;
-6        if (k == 0) return n;
-7        int best = -1, i = 0, sum = 0;
-8        for (int j = 0; j < n; j++) {
-9            sum += A[j];
-10            while (sum > k)
-11                sum -= A[i++];
-12            if (sum == k)
-13                best = max(best, j - i + 1);
-14        }
-15        return best + 1 ? n - best : -1;
-16    }
-17};
+// Last updated: 10/24/2026, 2:06:16 PM
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int x) {
+        int n = nums.size();
+        int total = accumulate(nums.begin(), nums.end(), 0);
+        int target = total - x;
+
+        if(target < 0) return -1;
+        if(target == 0) return n;
+
+        int left = 0;
+        int sum = 0;
+        int longest = -1;
+
+        for(int right = 0; right < n; right++){
+            sum += nums[right];
+            while(left <= right && sum > target){
+                sum -= nums[left++];
+            }
+            if(sum == target){
+                longest = max(longest, right - left + 1);
+            }
+        }
+
+        return longest == -1 ? -1 : n - longest;
+    }
+};
