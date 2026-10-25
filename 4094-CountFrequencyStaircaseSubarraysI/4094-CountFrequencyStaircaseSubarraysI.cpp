@@ -1,4 +1,4 @@
-// Last updated: 10/25/2026, 11:24:19 PM
+// Last updated: 10/25/2026, 11:24:21 PM
 1class Solution {
 2public:
 3    int countStaircase(vector<int>& nums) {
