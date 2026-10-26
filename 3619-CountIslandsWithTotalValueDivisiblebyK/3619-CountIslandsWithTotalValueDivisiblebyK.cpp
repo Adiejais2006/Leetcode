@@ -1,4 +1,4 @@
-// Last updated: 10/26/2026, 12:10:47 PM
+// Last updated: 10/26/2026, 12:11:41 PM
 1class Solution {
 2    int bfs(int i, int j, vector<vector<int>>& vis, vector<vector<int>>& grid,
 3            int k) {
