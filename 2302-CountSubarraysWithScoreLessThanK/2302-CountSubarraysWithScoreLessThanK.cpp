@@ -1,22 +1,30 @@
-// Last updated: 10/26/2026, 2:23:08 PM
-1class Solution {
-2public:
-3    long long countSubarrays(vector<int>& nums, long long k) {
-4        long long n = nums.size();
-5        long long ans = 0;
-6        long long l = 0;
-7        long long r = 0;
-8        long long sum = 0;
-9        while (r < n) {
-10            sum += nums[r];
-11            while (l <= r && sum * (r - l + 1) >= k) {
-12                ans += (n - r); 
-13                sum -= nums[l];
-14                l++;
-15            }
-16            r++;
-17        }
-18        return (n * (n + 1) / 2) - ans;
-19    }
-20};
-21
+// Last updated: 10/26/2026, 2:26:20 PM
+    // in this problem idea is that nums[i]>0 thus as we expand
+    // in left side value will always increase
+    // initially it will be in range but later it will
+    // go out of k thus we need to search for that index
+
+    // now what we can do is that we mantain a prefix sum
+    // and while searching we get sum from prefix array and
+    // window size from pointers thus able to do it optimally
+    int n=nums.length;
+    long[] pref=new long[n+1];// 1-based indexing
+    long res=0;
+    for(int i=0;i<n;i++){
+        pref[i+1]=nums[i]+pref[i];
+        int low=0,high=i+1;
+        int ans=high;
+        while(low<=high){
+            int mid=(low+high)/2;
+            long val=(pref[i+1]-pref[mid])*(i+1-mid);
+            if(val>=k){
+                low=mid+1;
+            }
+            else{
+                ans=mid;
+                high=mid-1;
+            }
+        }   
+        res+=(i+1)-ans;
+    }
+    return res;
