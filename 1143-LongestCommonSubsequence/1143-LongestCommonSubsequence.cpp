@@ -1,20 +1,22 @@
-// Last updated: 10/24/2026, 4:17:23 PM
+// Last updated: 10/27/2026, 3:18:56 PM
 1class Solution {
-2
-3public:
-4    int longestCommonSubsequence(string text1, string text2) {
-5        int n = text1.size();
-6        int m = text2.size();
-7        vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
-8        for (int i = 1; i <= n; i++) {
-9            for (int j = 1; j <= m; j++) {
-10                if (text1[i-1] == text2[j-1]) {
-11                    dp[i][j] = 1 + dp[i - 1][j - 1];
-12                } else {
-13                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
-14                }
-15            }
-16        }
-17         return dp[n][m];
-18    }
-19};
+2    int func(int i, int j, string &s1, string &s2,  vector<vector<int>> &dp) {
+3        if(i<0 || j <0) return 0 ;
+4        if(dp[i][j]!=-1)return dp[i][j];
+5        if (s1[i] == s2[j]) {
+6            return 1 + func(i - 1, j - 1, s1, s2,dp);
+7        } else {
+8            int skipleft = func(i - 1, j, s1, s2,dp);
+9            int skipright = func(i , j-1, s1, s2,dp);
+10            return dp[i][j] =  max(skipleft, skipright);
+11        }
+12    }
+13
+14public:
+15    int longestCommonSubsequence(string text1, string text2) {
+16        int n = text1.size();
+17        int m = text2.size();
+18        vector<vector<int>> dp(n , vector<int>(m,-1));
+19        return func(n-1,m-1,text1,text2,dp);
+20    }
+21};
