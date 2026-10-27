@@ -1,4 +1,4 @@
-// Last updated: 10/27/2026, 3:23:33 PM
+// Last updated: 10/27/2026, 3:24:54 PM
 1class Solution {
 2    int rec(int i, int j, string& s1, string& s2) {
 3        if (i == s1.size() || j == s2.size())
@@ -37,12 +37,29 @@
 36        }
 37        return dp[0][0];
 38    }
-39
-40public:
-41    int longestCommonSubsequence(string text1, string text2) {
-42        int n = text1.size();
-43        int m = text2.size();
-44        vector<vector<int>> dp(n + 1, vector<int>(m + 1, -1));
-45        return tab(text1, text2);
-46    }
-47};
+39    int space(string& s1, string& s2) {
+40        int n = s1.size();
+41        int m = s2.size();
+42        vector<int> prev(m + 1, 0);
+43        vector<int> curr(m + 1, 0);
+44        for (int i = n - 1; i >= 0; i--) {
+45            for (int j = m - 1; j >= 0; j--) {
+46                if (s1[i] == s2[j]) {
+47                    curr[j] = 1 + prev[j + 1];
+48                } else {
+49                    curr[j] = max(prev[j], curr[j + 1]);
+50                }
+51            }
+52            prev = curr;
+53        }
+54        return prev[0];
+55    }
+56
+57public:
+58    int longestCommonSubsequence(string text1, string text2) {
+59        int n = text1.size();
+60        int m = text2.size();
+61        vector<vector<int>> dp(n + 1, vector<int>(m + 1, -1));
+62        return space(text1, text2);
+63    }
+64};
