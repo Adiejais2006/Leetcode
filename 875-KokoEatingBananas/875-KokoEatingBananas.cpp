@@ -1,27 +1,33 @@
-// Last updated: 7/21/2026, 12:40:28 AM
+// Last updated: 10/27/2026, 3:08:44 PM
 1class Solution {
-2public:
-3    int minEatingSpeed(vector<int>& piles, int h) {
-4        int maxu = INT_MIN;
-5        for (auto it : piles) {
-6            maxu = max(maxu, it);
+2    int hrteller(int number, vector<int>& piles) {
+3        int time = 0;
+4        int sum = 0;
+5        for (int i = 0; i < piles.size(); i++) {
+6            time += ((piles[i] + number - 1) / number);
 7        }
-8        int low = 1;
-9        int high = maxu;
-10        int ans = INT_MAX;
-11        while (low <= high) {
-12            int mid = low + (high - low) / 2;
-13            long long hrs = 0;
-14            ;
-15            for (auto it : piles) {
-16                hrs += (it + mid - 1) / mid;
-17            }
-18            if (hrs > h) {
-19                low = mid + 1;
-20            } else {
-21                high = mid - 1;
-22            }
-23        }
-24        return low;
-25    }
-26};
+8        return time;
+9    }
+10
+11public:
+12    int minEatingSpeed(vector<int>& piles, int h) {
+13        int n = piles.size();
+14        int maxu = 0;
+15        for (auto it : piles)
+16            maxu = max(maxu, it);
+17        int low = 1;
+18        int high = maxu;
+19        int ans = INT_MAX;
+20        while (low <= high) {
+21            int mid = low + (high - low) / 2;
+22            int consumehours = hrteller(mid, piles);
+23            if (consumehours > h) {
+24                low = mid + 1;
+25            } else {
+26                ans = min(ans, mid);
+27                high = mid - 1;
+28            }
+29        }
+30        return ans;
+31    }
+32};
