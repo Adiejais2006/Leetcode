@@ -1,4 +1,4 @@
-// Last updated: 10/28/2026, 9:55:11 PM
+// Last updated: 10/28/2026, 10:01:12 PM
 1class Solution {
 2public:
 3    int characterReplacement(string s, int k) {
@@ -11,7 +11,7 @@
 10        while (r < n) {
 11            hash[s[r] - 'A']++;
 12            mostoccur = max(mostoccur, hash[s[r] - 'A']);
-13            while ((r - l + 1) - mostoccur > k) {
+13            if ((r - l + 1) - mostoccur > k) {
 14                hash[s[l++]-'A']--;
 15            }
 16            ans = max(ans, (r - l + 1));
