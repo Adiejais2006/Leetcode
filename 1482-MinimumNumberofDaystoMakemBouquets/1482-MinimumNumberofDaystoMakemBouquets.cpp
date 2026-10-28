@@ -1,4 +1,4 @@
-// Last updated: 7/21/2026, 2:13:25 PM
+// Last updated: 10/28/2026, 9:41:19 PM
 1class Solution {
 2    bool canMake(vector<int>& bloomDay, int day, int m, int k) {
 3        int consecutive = 0;
