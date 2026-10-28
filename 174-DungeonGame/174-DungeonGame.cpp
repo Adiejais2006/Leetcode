@@ -1,26 +1,24 @@
-// Last updated: 10/29/2026, 12:00:03 AM
+// Last updated: 10/29/2026, 12:12:22 AM
 1class Solution {
-2    int func(int i, int j, vector<vector<int>>& dungeon,
-3             vector<vector<int>>& dp) {
-4        int n = dungeon.size();
-5        int m = dungeon[0].size();
-6        if (i >= n || j >= m)
-7            return 1e9;
-8        if (i == n - 1 && j == m - 1)
-9            return max(1, 1 - dungeon[i][j]);
-10        if (dp[i][j] != -1)
-11            return dp[i][j];
-12        int right = func(i, j + 1, dungeon, dp);
-13        int down = func(i + 1, j, dungeon, dp);
-14        int next = min(right, down);
-15        return dp[i][j] = max(1, next - dungeon[i][j]);
-16    }
-17
-18public:
-19    int calculateMinimumHP(vector<vector<int>>& dungeon) {
-20        int n = dungeon.size();
-21        int m = dungeon[0].size();
-22        vector<vector<int>> dp(n, vector<int>(m, -1));
-23        return func(0, 0, dungeon, dp);
-24    }
-25};
+2
+3public:
+4    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+5        int m = dungeon.size();
+6        int n = dungeon[0].size();
+7        vector<vector<int>> dp(m, vector<int>(n, 0));
+8        for (int i = m - 1; i >= 0; i--) {
+9            for (int j = n - 1; j >= 0; j--) {
+10                if (i == m - 1 && j == n - 1) {
+11                    dp[i][j] = (dungeon[i][j] > 0) ? 1 : abs(dungeon[i][j]) + 1;
+12                } else {
+13                    int down = (i + 1 >= m) ? 1e9 : dp[i + 1][j];
+14                    int right = (j + 1 >= n) ? 1e9 : dp[i][j + 1];
+15
+16                    int ans = min(down, right) - dungeon[i][j];
+17                    dp[i][j] = (ans > 0) ? ans : 1;
+18                }
+19            }
+20        }
+21        return dp[0][0];
+22    }
+23};
