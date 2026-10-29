@@ -1,34 +1,27 @@
-// Last updated: 10/29/2026, 11:57:09 PM
+// Last updated: 10/30/2026, 12:06:50 AM
 1class Solution {
-2    int func(int i, int j, string& s1, string& s2, vector<vector<int>>& dp) {
-3        if (i == s1.size()) {
-4            int sum = 0;
-5            while (j < s2.size()) {
-6                sum += s2[j++];
-7            }
-8                return sum;
+2public:
+3    int minimumDeleteSum(string s1, string s2) {
+4        int n = s1.size();
+5        int m = s2.size();
+6        vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+7        for (int j = m - 1; j >= 0; j--) {
+8            dp[n][j] = s2[j] + dp[n][j + 1];
 9        }
-10        if (j == s2.size()) {
-11            int sum = 0;
-12            while (i < s1.size()) {
-13                sum += s1[i++];
-14            }
-15                return sum;
-16        }
-17        if(dp[i][j]!=-1)return dp[i][j];
-18        if (s1[i] == s2[j]) {
-19            return dp[i][j] =  func(i + 1, j + 1, s1, s2, dp);
-20        } else {
-21            return dp[i][j] =  min(s1[i] + func(i + 1, j, s1, s2, dp),
-22                       s2[j] + func(i, j + 1, s1, s2, dp));
-23        }
+10        for (int i = n - 1; i >= 0; i--) {
+11            dp[i][m] = s1[i] + dp[i + 1][m];
+12        }
+13        for (int i = n - 1; i >= 0; i--) {
+14            for (int j = m - 1; j >= 0; j--) {
+15                if (s1[i] == s2[j]) {
+16                    dp[i][j] = dp[i + 1][j + 1];
+17                } else {
+18                    dp[i][j] = min((int)s1[i] + dp[i + 1][j],
+19                                   (int)s2[j] + dp[i][j + 1]);
+20                }
+21            }
+22        }
+23        return dp[0][0];
 24    }
-25
-26public:
-27    int minimumDeleteSum(string s1, string s2) {
-28        int n = s1.size();
-29        int m = s2.size();
-30        vector<vector<int>> dp(n, vector<int>(m, -1));
-31        return func(0, 0, s1, s2, dp);
-32    }
-33};
+25};
+26
