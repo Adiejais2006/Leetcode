@@ -1,4 +1,4 @@
-// Last updated: 10/29/2026, 8:21:03 PM
+// Last updated: 10/29/2026, 8:21:09 PM
 1class Solution {
 2public:
 3    int arrangeCoins(int n) {
