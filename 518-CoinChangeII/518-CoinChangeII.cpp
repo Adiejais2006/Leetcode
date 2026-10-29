@@ -1,24 +1,26 @@
-// Last updated: 10/19/2026, 3:40:51 PM
+// Last updated: 10/29/2026, 3:12:18 PM
 1class Solution {
-2public:
-3    int change(int amount, vector<int>& coins) {
-4        int n = coins.size();
-5        vector<unsigned long long> prev(amount + 1, 0);
-6        vector<unsigned long long> curr(amount + 1, 0);
-7        for (int i = 0; i <= amount; i++) {
-8            prev[i] = (i % coins[0] == 0) ? 1 : 0;
+2    int func(int i, int amount, vector<int>& coins, vector<vector<int>>& dp) {
+3        if (amount == 0)
+4            return 1;
+5        if (i == coins.size() - 1) {
+6            if (amount % coins[i] == 0 || amount == 0)
+7                return 1;
+8            return 0;
 9        }
-10        for (int i = 1; i < n; i++) {
-11            for (int j = 0; j <= amount; j++) {
-12                unsigned long long nottake = prev[j];
-13                unsigned long long take = 0;
-14                if (j >= coins[i]) {
-15                    take = curr[j - coins[i]];
-16                }
-17                curr[j] = take + nottake;
-18            }
-19            prev = curr;
-20        }
-21        return (int)prev[amount];
-22    }
-23};
+10        if (dp[i][amount] != -1)
+11            return dp[i][amount];
+12        int notpick = func(i + 1, amount, coins, dp);
+13        int pick = 0;
+14        if (amount >= coins[i])
+15            pick = func(i, amount - coins[i], coins, dp);
+16        return dp[i][amount] = pick + notpick;
+17    }
+18
+19public:
+20    int change(int amount, vector<int>& coins) {
+21        int n =coins.size();
+22        vector<vector<int>> dp(n, vector<int>(amount + 1, -1));
+23        return func(0, amount, coins, dp);
+24    }
+25};
