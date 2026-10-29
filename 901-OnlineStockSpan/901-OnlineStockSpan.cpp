@@ -1,21 +1,18 @@
-// Last updated: 9/3/2026, 3:31:22 PM
+// Last updated: 10/29/2026, 4:52:15 PM
 1class StockSpanner {
 2    stack<pair<int, int>> st;
-3    int day;
+3
 4public:
-5    StockSpanner() {
-6        day = 0;
-7    }
-8    int next(int price) {
-9        while (!st.empty() && st.top().first <= price)
-10            st.pop();
-11        int ans;
-12        if (st.empty())
-13            ans = day + 1;
-14        else
-15            ans = day - st.top().second;
-16        st.push({price, day});
-17        day++;
-18        return ans;
-19    }
-20};
+5    StockSpanner() {}
+6
+7    int next(int price) {
+8        int span = 1;
+9        while (!st.empty() && st.top().first <= price) {
+10            span += st.top().second;
+11            st.pop();
+12        }
+13        st.push({price, span});
+14        return span;
+15    }
+16};
+17
