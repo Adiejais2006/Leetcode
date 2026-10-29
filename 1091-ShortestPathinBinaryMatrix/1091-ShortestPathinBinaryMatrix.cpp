@@ -1,4 +1,4 @@
-// Last updated: 10/29/2026, 6:12:32 PM
+// Last updated: 10/29/2026, 6:17:49 PM
 1class Solution {
 2public:
 3    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
@@ -8,29 +8,28 @@
 7            return -1;
 8        vector<vector<int>> vis(n, vector<int>(m, 0));
 9        queue<pair<int, pair<int, int>>> q;
-10        int ans = INT_MAX;
-11        vis[0][0] = 1;
-12        q.push({0, {0, 0}});
-13        int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
-14        int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
-15        while (!q.empty()) {
-16            auto [dist, it] = q.front();
-17            q.pop();
-18            int x = it.first;
-19            int y = it.second;
-20
-21            if (x == n - 1 && y == m - 1)
-22               ans=min(ans,dist+1);
-23            for (int i = 0; i < 8; i++) {
-24                int nx = x + dx[i];
-25                int ny = y + dy[i];
-26                if (nx >= 0 && nx < n && ny >= 0 && ny < m && !vis[nx][ny] &&
-27                    grid[nx][ny] == 0) {
-28                    vis[nx][ny] = 1;
-29                    q.push({dist + 1, {nx, ny}});
-30                }
-31            }
-32        }
-33        return ans==INT_MAX ? -1 : ans;
-34    }
-35};
+10        q.push({1, {0, 0}});
+11        int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+12        int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+13        int ans = INT_MAX;
+14        while (!q.empty()) {
+15            auto [dist, it] = q.front();
+16            q.pop();
+17            int x = it.first;
+18            int y = it.second;
+19            if (x == n - 1 && y == m - 1)
+20                ans = min(ans, dist);
+21
+22            for (int i = 0; i < 8; i++) {
+23                int nx = x + dx[i];
+24                int ny = y + dy[i];
+25                if (nx >= 0 && nx < n && ny >= 0 && ny < n &&
+26                    grid[nx][ny] == 0 && !vis[nx][ny]) {
+27                    vis[nx][ny] = 1;
+28                    q.push({dist + 1, {nx, ny}});
+29                }
+30            }
+31        }
+32        return ans==INT_MAX ? -1 : ans ;
+33    }
+34};
