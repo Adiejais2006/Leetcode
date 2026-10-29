@@ -1,4 +1,4 @@
-// Last updated: 10/29/2026, 3:24:11 PM
+// Last updated: 10/29/2026, 3:28:30 PM
 1class Solution {
 2    int func(int i, int amount, vector<int>& coins, vector<vector<int>>& dp) {
 3        if (amount == 0)
@@ -43,12 +43,39 @@
 42        }
 43        return dp[0][amount];
 44    }
-45
-46public:
-47    int change(int amount, vector<int>& coins) {
-48        int n = coins.size();
-49        // vector<vector<int>> dp(n, vector<int>(amount + 1, -1));
-50        // return func(0, amount, coins, dp);
-51        return tab(amount, coins);
-52    }
-53};
+45    int spaceop(int amount, vector<int>& coins) {
+46        int n = coins.size();
+47        vector<unsigned long long> prev(amount + 1, 0);
+48        vector<unsigned long long> curr(amount + 1, 0);
+49        // base cases
+50        // amount==0
+51            prev[0] = 1;
+52        // if i==n-1 then if divisbile by nums[n-1] then 1 else 0
+53        for (int i = 0; i <= amount; i++) {
+54            if (i % coins[n - 1] == 0)
+55                prev[i] = 1;
+56            else
+57                prev[i] = 0;
+58        }
+59        for (int i = n - 2; i >= 0; i--) {
+60            for (int amt = 0; amt <= amount; amt++) {
+61                unsigned long long notpick = prev[amt];
+62                unsigned long long pick = 0;
+63                if (amt >= coins[i])
+64                    pick = curr[amt - coins[i]];
+65                curr[amt] = pick + notpick;
+66            }
+67            prev = curr;
+68        }
+69        return prev[amount];
+70    }
+71
+72public:
+73    int change(int amount, vector<int>& coins) {
+74        int n = coins.size();
+75        // vector<vector<int>> dp(n, vector<int>(amount + 1, -1));
+76        // return func(0, amount, coins, dp);
+77        // return tab(amount, coins);
+78        return spaceop(amount, coins);
+79    }
+80};
