@@ -1,4 +1,4 @@
-// Last updated: 10/29/2026, 11:32:59 AM
+// Last updated: 10/29/2026, 11:33:29 AM
 1class Solution {
 2private:
 3    int n;
