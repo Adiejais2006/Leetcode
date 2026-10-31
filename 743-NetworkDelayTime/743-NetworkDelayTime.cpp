@@ -1,4 +1,4 @@
-// Last updated: 9/21/2026, 7:02:34 PM
+// Last updated: 10/31/2026, 3:27:44 PM
 1class Solution {
 2public:
 3    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
@@ -9,31 +9,30 @@
 8            int wt = it[2];
 9            adj[u].push_back({v, wt});
 10        }
-11        vector<int> dist(n + 1, 1e9);
-12        dist[k] = 0;
-13        priority_queue<pair<int, int>, vector<pair<int, int>>,
-14                       greater<pair<int, int>>>
-15            pq;
-16        pq.push({0, k});
-17        while (!pq.empty()) {
-18            auto [currDist, node] = pq.top();
-19            pq.pop();
-20            for (auto it : adj[node]) {
-21                int adjNode = it.first;
-22                int adjWt = it.second;
-23                int totalDist = currDist + adjWt;
-24                if (totalDist < dist[adjNode]) {
-25                    dist[adjNode] = totalDist;
-26                    pq.push({totalDist, adjNode});
-27                }
-28            }
-29        }
-30        int ans = -1;
-31        for (int i = 1; i <= n; i++) {
-32            if (dist[i] == 1e9)
-33                return -1;
-34            ans = max(ans, dist[i]);
-35        }
-36        return ans;
-37    }
-38};
+11        queue<pair<int, int>> q;
+12        q.push({0, k});
+13        vector<int> dist(n + 1, 1e9);
+14        dist[k] = 0;
+15        while (!q.empty()) {
+16            auto [time, node] = q.front();
+17            q.pop();
+18
+19            for (auto it : adj[node]) {
+20                int adjNode = it.first;
+21                int adjTime = it.second;
+22                int newTime = time + adjTime;
+23                if (newTime < dist[adjNode]) {
+24                    dist[adjNode] = newTime;
+25                    q.push({newTime, adjNode});
+26                }
+27            }
+28        }
+29        int ans = 0;
+30        for (int i = 1; i <= n; i++) {
+31            if (dist[i] == 1e9)
+32                return -1;
+33            ans = max(ans, dist[i]);
+34        }
+35        return ans;
+36    }
+37};
