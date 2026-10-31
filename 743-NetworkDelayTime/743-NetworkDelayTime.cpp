@@ -1,4 +1,4 @@
-// Last updated: 10/31/2026, 3:27:44 PM
+// Last updated: 10/31/2026, 3:35:33 PM
 1class Solution {
 2public:
 3    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
@@ -9,30 +9,33 @@
 8            int wt = it[2];
 9            adj[u].push_back({v, wt});
 10        }
-11        queue<pair<int, int>> q;
-12        q.push({0, k});
-13        vector<int> dist(n + 1, 1e9);
-14        dist[k] = 0;
-15        while (!q.empty()) {
-16            auto [time, node] = q.front();
-17            q.pop();
-18
-19            for (auto it : adj[node]) {
-20                int adjNode = it.first;
-21                int adjTime = it.second;
-22                int newTime = time + adjTime;
-23                if (newTime < dist[adjNode]) {
-24                    dist[adjNode] = newTime;
-25                    q.push({newTime, adjNode});
-26                }
-27            }
-28        }
-29        int ans = 0;
-30        for (int i = 1; i <= n; i++) {
-31            if (dist[i] == 1e9)
-32                return -1;
-33            ans = max(ans, dist[i]);
-34        }
-35        return ans;
-36    }
-37};
+11        priority_queue<pair<int, int>, vector<pair<int, int>>,
+12                       greater<pair<int, int>>>
+13            q;
+14        q.push({0, k});
+15        vector<int> dist(n + 1, 1e9);
+16        dist[k] = 0;
+17        while (!q.empty()) {
+18            auto [time, node] = q.top();
+19            q.pop();
+20            if (time > dist[node])
+21                continue;
+22            for (auto it : adj[node]) {
+23                int adjNode = it.first;
+24                int adjTime = it.second;
+25                int newTime = time + adjTime;
+26                if (newTime < dist[adjNode]) {
+27                    dist[adjNode] = newTime;
+28                    q.push({newTime, adjNode});
+29                }
+30            }
+31        }
+32        int ans = 0;
+33        for (int i = 1; i <= n; i++) {
+34            if (dist[i] == 1e9)
+35                return -1;
+36            ans = max(ans, dist[i]);
+37        }
+38        return ans;
+39    }
+40};
