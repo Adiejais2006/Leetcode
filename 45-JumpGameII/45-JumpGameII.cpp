@@ -1,17 +1,18 @@
-// Last updated: 10/31/2026, 9:38:50 PM
+// Last updated: 10/31/2026, 9:42:38 PM
 1class Solution {
-2
-3public:
-4    int jump(vector<int>& nums) {
-5        int n = nums.size();
-6        vector<int> dp(n, 0);
-7        for (int i = n -2; i >= 0; i--) {
-8            int jump = 1e9;
-9            for (int j = 1; j <= nums[i] && i + j < n; j++) {
-10                jump = min(jump, 1 + dp[i + j]);
-11            }
-12            dp[i] = jump;
+2public:
+3    int jump(vector<int>& nums) {
+4        int near = 0, far = 0, jumps = 0;
+5        while (far < nums.size() - 1) {
+6            int farthest = 0;
+7            for (int i = near; i <= far; i++) {
+8                farthest = max(farthest, i + nums[i]);
+9            }
+10            near = far + 1;
+11            far = farthest;
+12            jumps++;
 13        }
-14        return dp[0];
-15    }
-16};
+14
+15        return jumps;        
+16    }
+17};
