@@ -1,4 +1,4 @@
-// Last updated: 11/1/2026, 3:01:23 PM
+// Last updated: 11/1/2026, 3:01:29 PM
 1class Solution {
 2public:
 3    int maxScore(vector<int>& cardPoints, int k) {
