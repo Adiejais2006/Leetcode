@@ -1,4 +1,4 @@
-// Last updated: 11/1/2026, 8:54:50 PM
+// Last updated: 11/1/2026, 8:57:35 PM
 1class Solution {
 2public:
 3    int minMergedInteger(vector<int>& nums) {
