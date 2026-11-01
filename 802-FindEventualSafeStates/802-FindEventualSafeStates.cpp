@@ -1,11 +1,11 @@
-// Last updated: 11/1/2026, 4:25:07 PM
+// Last updated: 11/1/2026, 4:25:31 PM
 1class Solution {
 2    bool dfs(int node, vector<int>& vis, vector<vector<int>>& graph,
 3             vector<int>& safe) {
 4
 5        vis[node] = 1;
 6        for (auto it : graph[node]) {
-7            if (!vis[node]) {
+7            if (!vis[it]) {
 8                if (!dfs(it, vis, graph, safe))
 9                    return false;
 10            }
