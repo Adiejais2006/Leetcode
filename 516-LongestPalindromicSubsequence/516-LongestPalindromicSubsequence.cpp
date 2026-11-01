@@ -1,4 +1,4 @@
-// Last updated: 10/21/2026, 11:40:57 PM
+// Last updated: 11/1/2026, 4:35:02 PM
 1class Solution {
 2    int longestCommonSubsequence(string s1, string s2) {
 3        int n = s1.size();
