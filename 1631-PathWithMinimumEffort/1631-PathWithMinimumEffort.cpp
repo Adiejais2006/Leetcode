@@ -1,37 +1,36 @@
-// Last updated: 9/15/2026, 6:03:42 PM
+// Last updated: 11/2/2026, 4:47:10 PM
 1class Solution {
 2public:
 3    int minimumEffortPath(vector<vector<int>>& heights) {
 4        int n = heights.size();
 5        int m = heights[0].size();
-6        vector<vector<int>> dist(n, vector<int>(m, 1e9));
-7        dist[0][0] = 0;
-8        priority_queue<pair<int, pair<int, int>>,
-9                       vector<pair<int, pair<int, int>>>,
-10                       greater<pair<int, pair<int, int>>>>
-11            q;
-12        q.push({0, {0, 0}});
-13        while (!q.empty()) {
-14            auto [diff, cord] = q.top();
-15            q.pop();
-16            int x = cord.first;
-17            int y = cord.second;
-18            int currenteffort = dist[x][y];
-19            int dx[] = {-1, 1, 0, 0};
-20            int dy[] = {0, 0, -1, 1};
-21            for (int i = 0; i < 4; i++) {
-22                int nx = x + dx[i];
-23                int ny = y + dy[i];
-24                if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
-25                    int neweffort = abs(heights[nx][ny] - heights[x][y]);
-26                    int finaleffect = max(currenteffort, neweffort);
-27                    if (dist[nx][ny] > finaleffect) {
-28                        dist[nx][ny] = finaleffect;
-29                        q.push({dist[nx][ny], {nx, ny}});
-30                    }
-31                }
-32            }
-33        }
-34        return dist[n - 1][m - 1];
-35    }
-36};
+6        priority_queue<pair<int, pair<int, int>>,
+7                       vector<pair<int, pair<int, int>>>,
+8                       greater<pair<int, pair<int, int>>>>
+9            q; // dist x y
+10        q.push({0, {0, 0}});
+11        vector<vector<int>> dist(n, vector<int>(m, 1e9));
+12        dist[0][0] = 0;
+13        int dx[] = {0, 0, -1, 1};
+14        int dy[] = {-1, 1, 0, 0};
+15        while (!q.empty()) {
+16            auto [diff, cords] = q.top();
+17            q.pop();
+18            auto x = cords.first;
+19            auto y = cords.second;
+20            for(int i = 0 ; i< 4 ; i++){
+21                int nx = x + dx[i];
+22                int ny = y + dy[i];
+23                if(nx>=0 && nx < n && ny>=0 && ny<m){
+24                    int adjCost = heights[nx][ny];
+25                    int cost = max(diff ,abs(heights[x][y] - heights[nx][ny]));
+26                    if(dist[nx][ny]> cost){
+27                        dist[nx][ny] = cost;
+28                        q.push({cost ,{nx,ny}});
+29                    }
+30                }
+31            }
+32        }
+33        return dist[n - 1][m - 1];
+34    }
+35};
