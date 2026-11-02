@@ -1,22 +1,19 @@
-// Last updated: 9/6/2026, 7:04:05 PM
-1
-2class Solution {
-3    void rank(TreeNode* root, int& k, int& ans) {
-4        if (root == NULL)
-5            return;
-6        rank(root->left, k, ans);
-7        k--;
-8        if (k == 0) {
-9            ans = root->val;
-10            return;
-11        }
-12        rank(root->right, k, ans);
-13    }
-14
-15public:
-16    int kthSmallest(TreeNode* root, int k) {
-17        int ans = 0;
-18        rank(root, k, ans);
-19        return ans;
-20    }
-21};
+// Last updated: 11/2/2026, 4:30:14 PM
+1class Solution {
+2    int ans = 0;
+3    int cnt = 0;
+4    void preorder(TreeNode* root, int k) {
+5        if (root == NULL || cnt > k)
+6            return;
+7        preorder(root->left, k);
+8        cnt++;
+9        if (cnt == k)
+10            ans = root->val;
+11        preorder(root->right, k);
+12    }
+13public:
+14    int kthSmallest(TreeNode* root, int k) {
+15        preorder(root, k);
+16        return ans;
+17    }
+18};
