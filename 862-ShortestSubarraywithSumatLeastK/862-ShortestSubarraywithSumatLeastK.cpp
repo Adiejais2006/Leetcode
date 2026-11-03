@@ -1,26 +1,22 @@
-// Last updated: 11/3/2026, 9:58:04 PM
+// Last updated: 11/3/2026, 10:17:21 PM
 1class Solution {
 2public:
 3    int shortestSubarray(vector<int>& nums, int k) {
 4        int n = nums.size();
-5        deque<int> dq;
-6        vector<int> prefix(n + 1, 0);
-7        for (int i = 0; i < n; i++) {
-8            prefix[i + 1] = prefix[i] + nums[i];
-9        }
+5        vector<long long> prefix(n + 1, 0);
+6        for (int i = 0; i < n; i++) {
+7            prefix[i + 1] = prefix[i] + nums[i];
+8        }
+9        priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<pair<long long, int>>> pq;
 10        int ans = n + 1;
-11
-12        for (int i = 0; i <= n; i++) {
-13
-14            while (!dq.empty() && prefix[i] - prefix[dq.front()] >= k) {
-15                ans = min(ans, i - dq.front());
-16                dq.pop_front();
-17            }
-18            while (!dq.empty() && prefix[dq.back()] >= prefix[i]) {
-19                dq.pop_back();
-20            }
-21            dq.push_back(i);
-22        }
-23        return ans == n + 1 ? -1 : ans;
-24    }
-25};
+11        for (int i = 0; i <= n; i++) {
+12            while (!pq.empty() && prefix[i] - pq.top().first >= k) {
+13                ans = min(ans, i - pq.top().second); 
+14                pq.pop(); 
+15            }
+16            pq.push({prefix[i], i});
+17        }
+18        return ans == n + 1 ? -1 : ans; 
+19    }
+20};
+21
