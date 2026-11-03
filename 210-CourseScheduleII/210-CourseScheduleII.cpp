@@ -1,36 +1,44 @@
-// Last updated: 9/14/2026, 4:55:17 PM
+// Last updated: 11/3/2026, 9:19:46 PM
 1class Solution {
-2public:
-3    vector<int> findOrder(int n, vector<vector<int>>& nums) {
-4        vector<int> adj[n];
-5        for (auto it : nums) {
-6            int u = it[1];
-7            int v = it[0];
-8            adj[u].push_back(v);
-9        }
-10        vector<int> indegree(n, 0);
-11        for (int i = 0; i < n; i++) {
-12            for (auto it : adj[i]) {
-13                indegree[it]++;
-14            }
-15        }
-16        queue<int> q;
-17        for (int i = 0; i < n; i++)
-18            if (indegree[i] == 0)
-19                q.push(i);
-20        vector<int> ans;
-21        while (!q.empty()) {
-22            auto node = q.front();
-23            q.pop();
-24            ans.push_back(node);
-25            for (auto it : adj[node]) {
-26                if (indegree[it] > 0)
-27                    indegree[it]--;
-28                if (indegree[it] == 0)
-29                    q.push(it);
-30            }
-31        }
-32        if(ans.size()!=n) return {};
-33        return ans;
-34    }
-35};
+2    bool topo(int node, vector<int>& ans, vector<int> adj[], vector<int>& vis,
+3              stack<int>& st, unordered_set<int>& path) {
+4        vis[node] = 1;
+5        path.insert(node);
+6        for (auto it : adj[node]) {
+7            if (!vis[it]) {
+8                if (!topo(it, ans, adj, vis, st, path))
+9                    return false;
+10            } else {
+11                if (path.count(it))
+12                    return false;
+13            }
+14        }
+15        st.push(node);
+16        path.erase(node);
+17        return true;
+18    }
+19
+20public:
+21    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+22        vector<int> adj[numCourses];
+23        for (auto it : prerequisites) {
+24            int u = it[0];
+25            int v = it[1];
+26            adj[v].push_back(u);
+27        }
+28        vector<int> ans;
+29        stack<int> st;
+30        unordered_set<int> path;
+31        vector<int> vis(numCourses, 0);
+32        for (int i = 0; i < numCourses; i++)
+33            if (!vis[i])
+34                if (!topo(i, ans, adj, vis, st, path))
+35                    return {};
+36
+37        while (!st.empty()) {
+38            ans.push_back(st.top());
+39            st.pop();
+40        }
+41        return ans;
+42    }
+43};
