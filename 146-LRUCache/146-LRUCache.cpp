@@ -1,98 +1,77 @@
-// Last updated: 8/31/2026, 11:45:44 PM
+// Last updated: 11/3/2026, 1:36:05 PM
 1class LRUCache {
-2
-3    class Node {
-4    public:
-5        int key;
-6        int val;
-7        Node* next;
-8        Node* prev;
-9
-10        Node(int k, int v) {
-11            key = k;
-12            val = v;
-13            next = NULL;
-14            prev = NULL;
-15        }
-16    };
-17
-18    int cap;
-19    Node* head;
-20    Node* tail;
-21    unordered_map<int, Node*> mpp;
-22
-23    void insertAfterHead(Node* node) {
-24        Node* temp = head->next;
+2    int size;
+3    struct Node {
+4        int key, val;
+5        Node* next;
+6        Node* prev;
+7
+8        Node(int k, int v) {
+9            key = k;
+10            val = v;
+11            next = NULL;
+12            prev = NULL;
+13        }
+14    };
+15    Node* head;
+16    Node* tail;
+17    unordered_map<int, Node*> mpp;
+18    void insertafterhead(Node* node) {
+19        Node* headnext = head->next;
+20        head->next = node;
+21        node->next = headnext;
+22        headnext->prev = node;
+23        node->prev = head;
+24    }
 25
-26        node->next = temp;
-27        node->prev = head;
-28
-29        head->next = node;
-30        temp->prev = node;
+26    void deleteNode(Node* node) {
+27        Node* nodeNext = node->next;
+28        Node* nodePrev = node->prev;
+29        nodePrev->next = nodeNext;
+30        nodeNext->prev = nodePrev;
 31    }
 32
-33    void deleteNode(Node* node) {
-34        Node* forward = node->next;
-35        Node* backward = node->prev;
-36
-37        backward->next = forward;
-38        forward->prev = backward;
-39    }
-40
-41public:
-42
-43    LRUCache(int capacity) {
-44        cap = capacity;
-45
-46        head = new Node(-1, -1);
-47        tail = new Node(-1, -1);
-48
-49        head->next = tail;
-50        tail->prev = head;
-51    }
-52
-53    int get(int key) {
-54
-55        if (mpp.find(key) == mpp.end())
-56            return -1;
-57
-58        Node* node = mpp[key];
-59
-60        deleteNode(node);
-61        insertAfterHead(node);
-62
-63        return node->val;
-64    }
-65
-66    void put(int key, int value) {
-67
-68        if (mpp.find(key) != mpp.end()) {
-69
-70            Node* node = mpp[key];
-71
-72            node->val = value;
-73
-74            deleteNode(node);
-75            insertAfterHead(node);
-76
-77        } else {
-78
-79            if (mpp.size() == cap) {
-80
-81                Node* last = tail->prev;
-82
-83                deleteNode(last);
-84
-85                mpp.erase(last->key);
-86
-87                delete last;
-88            }
-89
-90            Node* newNode = new Node(key, value);
-91
-92            insertAfterHead(newNode);
-93
-94            mpp[key] = newNode;
-95        }
-96    }
-97};
+33public:
+34    LRUCache(int capacity) {
+35        size = capacity;
+36        head = new Node(-1, -1);
+37        tail = new Node(-1, -1);
+38        head->next = tail;
+39        tail->prev = head;
+40    }
+41
+42    int get(int key) {
+43        if (mpp.find(key) == mpp.end())
+44            return -1;
+45        Node* node = mpp[key];
+46        deleteNode(node);
+47        insertafterhead(node);
+48        return node->val;
+49    }
+50    void put(int key, int value) {
+51        if (mpp.find(key) != mpp.end()) {
+52            Node* node = mpp[key];
+53            node->val = value;
+54            deleteNode(node);
+55            insertafterhead(node);
+56
+57        } else {
+58            if (mpp.size() == size) {
+59                Node* last = tail->prev;
+60                deleteNode(last);
+61                mpp.erase(last->key);
+62                delete last;
+63            }
+64            Node* newNode = new Node(key, value);
+65            insertafterhead(newNode);
+66            mpp[key] = newNode;
+67        }
+68    }
+69};
+70
+71/**
+72 * Your LRUCache object will be instantiated and called as such:
+73 * LRUCache* obj = new LRUCache(capacity);
+74 * int param_1 = obj->get(key);
+75 * obj->put(key,value);
+76 */
