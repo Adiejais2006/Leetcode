@@ -1,29 +1,30 @@
-// Last updated: 9/3/2026, 8:45:24 PM
+// Last updated: 11/4/2026, 9:28:30 PM
 1class Solution {
 2public:
 3    vector<int> asteroidCollision(vector<int>& asteroids) {
-4        stack<int> st;
-5        for (auto a : asteroids) {
-6            if (a > 0)
-7                st.push(a);
-8            else {
-9                while (!st.empty() && st.top() > 0 && st.top() < abs(a)) {
-10                    st.pop();
-11                }
-12                if (st.empty() || st.top() < 0)
-13                    st.push(a);
-14                if (!st.empty() && st.top() == -a) {
-15                    st.pop();
-16                }
-17            }
-18        }
-19        int size = st.size();
-20        vector<int> ans(size);
-21        int i = size-1;
+4        int n = asteroids.size();
+5        stack<int> st;
+6        for (int i = 0; i < n; i++) {
+7            if (asteroids[i] > 0) {
+8                st.push(asteroids[i]);
+9            } else {
+10
+11                while (!st.empty() && st.top() > 0 &&
+12                       st.top() < abs(asteroids[i]))
+13                    st.pop();
+14                if (st.empty() || st.top() < 0)
+15                    st.push(asteroids[i]);
+16                if (!st.empty() && st.top() == -asteroids[i]) {
+17                    st.pop();
+18                }
+19            }
+20        }
+21        vector<int> ans;
 22        while (!st.empty()) {
-23            ans[i--] = st.top();
+23            ans.push_back(st.top());
 24            st.pop();
 25        }
-26        return ans;
-27    }
-28};
+26        reverse(ans.begin(), ans.end());
+27        return ans;
+28    }
+29};
