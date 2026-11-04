@@ -1,4 +1,4 @@
-// Last updated: 11/4/2026, 7:27:28 PM
+// Last updated: 11/4/2026, 7:29:29 PM
 class Solution {
 public:
     int findKthNumber(int m, int n, int k) {
