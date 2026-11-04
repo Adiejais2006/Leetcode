@@ -1,4 +1,4 @@
-// Last updated: 11/4/2026, 6:33:11 PM
+// Last updated: 11/4/2026, 6:33:25 PM
 1class Solution {
 2public:
 3    int differenceOfSums(int n, int m) {
