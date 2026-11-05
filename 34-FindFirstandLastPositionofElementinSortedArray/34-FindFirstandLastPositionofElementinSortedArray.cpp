@@ -1,4 +1,4 @@
-// Last updated: 7/20/2026, 10:41:34 PM
+// Last updated: 11/5/2026, 4:30:13 PM
 1class Solution {
 2    int upperIndex(vector<int>& nums, int target) {
 3        int n = nums.size();
