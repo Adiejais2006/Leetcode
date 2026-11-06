@@ -1,4 +1,4 @@
-// Last updated: 11/6/2026, 4:22:24 PM
+// Last updated: 11/6/2026, 4:25:11 PM
 1class Solution {
 2public:
 3    bool hasSameDigits(string s) {
@@ -11,9 +11,7 @@
 10            }
 11            s = ans;
 12        }
-13        if (s.size() == 2) {
-14            return s[0] == s[1];
-15        }
-16        return false;
-17    }
-18};
+13
+14        return s[0] == s[1];
+15    }
+16};
