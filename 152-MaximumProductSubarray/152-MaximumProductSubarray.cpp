@@ -1,19 +1,18 @@
-// Last updated: 7/18/2026, 2:05:54 PM
-class Solution {
-public:
-    int maxProduct(vector<int>& nums) {
-          int maxi = INT_MIN;
-        int pre = 1;
-        int suff = 1;
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (pre == 0) pre = 1;
-            if (suff == 0) suff = 1;
-             pre =pre* nums[i];
-             suff = suff* nums[n - 1 - i];
-            maxi = (long long)max(maxi, max(pre,suff));
-        }
-
-        return maxi;
-    }
-};
+// Last updated: 11/6/2026, 6:34:20 PM
+1class Solution {
+2public:
+3    int maxProduct(vector<int>& nums) {
+4        int n = nums.size();
+5        int ans = INT_MIN;
+6        int pre =1;
+7        int suff =1;
+8        for(int i  =0 ; i<nums.size() ; i++){
+9            if(pre==0)pre=1;
+10            if(suff==0)suff=1;
+11            pre*= nums[i];
+12            suff*=nums[n-1-i];
+13            ans=max(ans,max(pre,suff));
+14        }
+15        return ans ;
+16    }
+17};
