@@ -1,35 +1,56 @@
-// Last updated: 9/16/2026, 2:32:16 PM
+// Last updated: 11/9/2026, 3:37:07 PM
 1class Solution {
-2    int find(int i, vector<int> &parent) {
-3        if (i == parent[i])
-4            return i;
-5        return parent[i] = find(parent[i],parent);
-6    }
-7
-8public:
-9    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-10        int n = edges.size();
-11        vector<int> parent(n+1);
-12        vector<int> size(n+1, 1);
-13        for (int i = 0; i < n; i++)
-14            parent[i] = i;
-15        for (int i = 0; i < n; i++) {
-16            int a = edges[i][0];
-17            int b = edges[i][1];
-18            int roota = find(a,parent);
-19            int rootb = find(b,parent);
-20            if (roota == rootb)
-21                return {a, b};
-22            if (roota != rootb) {
-23                if (size[roota] > size[rootb]) {
-24                    parent[rootb] = roota;
-25                    size[roota] += size[rootb];
-26                } else {
-27                    parent[roota] = rootb;
-28                    size[rootb] += size[roota];
-29                }
-30            }
-31        }
-32        return {};
-33    }
-34};
+2    class dsu {
+3    private:
+4        vector<int> size;
+5        vector<int> parent;
+6
+7    public:
+8        dsu(int n) {
+9            size.resize(n + 1, 1);
+10            parent.resize(n + 1);
+11            for (int i = 0; i <= n; i++) {
+12                parent[i] = i;
+13            }
+14        }
+15
+16        int upar(int i) {
+17            if (i == parent[i])
+18                return i;
+19            return parent[i] = upar(parent[i]);
+20        }
+21        void unionsize(int a, int b) {
+22            int ua = upar(a);
+23            int ub = upar(b);
+24            if (ua != ub) {
+25                if (size[ua] > size[ub]) {
+26                    size[ua] += size[ub];
+27                    parent[ub] = ua;
+28                } else {
+29                    size[ub] += size[ua];
+30                    parent[ua] = ub;
+31                }
+32            }
+33        }
+34    };
+35
+36public:
+37    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+38        int n = edges.size();
+39        dsu ds(n);
+40        for(auto it: edges){
+41            int a=it[0];
+42            int b=it[1];
+43            int ua = ds.upar(a);
+44            int ub = ds.upar(b);
+45
+46            if(ua!=ub){
+47                ds.unionsize(a,b);
+48            }
+49            else {
+50                return {a,b};
+51            }
+52        }
+53        return {};
+54    }
+55};
