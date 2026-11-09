@@ -1,4 +1,4 @@
-// Last updated: 9/14/2026, 2:57:45 PM
+// Last updated: 11/9/2026, 5:30:16 PM
 1class Solution {
 2    void dfs(int node, vector<int>& vis, vector<int> adj[]) {
 3        if (vis[node])
