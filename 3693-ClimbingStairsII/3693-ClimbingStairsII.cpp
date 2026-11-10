@@ -1,21 +1,25 @@
-// Last updated: 11/10/2026, 7:28:18 PM
+// Last updated: 11/10/2026, 7:28:45 PM
 1class Solution {
-2    int func(int i, vector<int>& nums, vector<int>& dp) {
-3        if (i == nums.size() - 1)
-4            return 0;
-5        if (dp[i+1] != -1)
-6            return dp[i+1];
-7        int profit = INT_MAX;
-8        for (int j = i + 1; j <= i + 3 && j < nums.size(); j++) {
-9            profit =
-10                min(profit, nums[j] + (j - i) * (j - i) + func(j, nums, dp));
-11        }
-12        return dp[i+1] = profit;
-13    }
-14
-15public:
-16    int climbStairs(int n, vector<int>& costs) {
-17        vector<int> dp(n + 3, -1);
-18        return func(-1, costs, dp);
-19    }
-20};
+2public:
+3    int climbStairs(int n, vector<int>& costs) {
+4        int a = 0, b = 0, c = 0;
+5
+6        for (int i = n - 2; i >= -1; i--) {
+7            int curr = INT_MAX;
+8
+9            for (int j = i + 1; j <= i + 3 && j < n; j++) {
+10                int next = (j == i + 1) ? a :
+11                           (j == i + 2) ? b : c;
+12
+13                curr = min(curr, costs[j] +
+14                            (j - i) * (j - i) + next);
+15            }
+16
+17            c = b;
+18            b = a;
+19            a = curr;
+20        }
+21
+22        return a;
+23    }
+24};
