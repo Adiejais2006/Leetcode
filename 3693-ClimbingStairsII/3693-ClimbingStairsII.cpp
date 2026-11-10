@@ -1,4 +1,4 @@
-// Last updated: 11/10/2026, 7:11:50 PM
+// Last updated: 11/10/2026, 7:21:52 PM
 1class Solution {
 2    int func(int i, vector<int>& nums, vector<int>& dp) {
 3        if (i == nums.size() - 1)
