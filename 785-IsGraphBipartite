@@ -1,40 +1,29 @@
-// Last updated: 11/12/2026, 6:04:56 PM
+// Last updated: 11/12/2026, 6:09:36 PM
 1class Solution {
-2    bool bfs(queue<pair<int, int>>& q, vector<int>& vis, vector<int>& colorNode,
-3             vector<vector<int>>&graph) {
-4        while (!q.empty()) {
-5            auto [node, color] = q.front();
-6            q.pop();
-7            for (auto it : graph[node]) {
-8                if (!vis[it]) {
-9                    colorNode[it] = !color;
-10                    vis[it] = 1;
-11                    q.push({it, !color});
-12                } else {
-13                    if (colorNode[it] == color)
-14                        return false;
-15                }
-16            }
-17        }
-18        return true;
-19    }
-20
-21public:
-22    bool isBipartite(vector<vector<int>>& graph) {
-23        int n = graph.size();
-24        vector<int> vis(n, 0);
-25        vector<int> colorNode(n, -1);
-26        queue<pair<int, int>> q;
-27
-28        for (int i = 0; i < n; i++) {
-29            if (!vis[i]) {
-30                q.push({i, 1});
-31                vis[i] = 1;
-32                colorNode[i] = 1;
-33                if (!bfs(q, vis, colorNode,graph))
-34                    return false;
-35            }
-36        }
-37        return true;
-38    }
-39};
+2public:
+3    bool isBipartite(vector<vector<int>>& graph) {
+4        int n = graph.size();
+5        vector<int> color(n, -1);
+6        queue<int> q;
+7        for (int i = 0; i < n; i++) {
+8            if (color[i] == -1) {
+9                q.push(i);
+10                color[i] = 0;
+11                while (!q.empty()) {
+12                    int node = q.front();
+13                    q.pop();
+14                    for (auto it : graph[node]) {
+15                        if (color[it] == -1) {
+16                            color[it] = 1 - color[node];
+17                            q.push(it);
+18                        }
+19                        else if (color[it] == color[node]) {
+20                            return false;
+21                        }
+22                    }
+23                }
+24            }
+25        }
+26        return true;
+27    }
+28};
