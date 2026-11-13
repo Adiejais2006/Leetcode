@@ -1,4 +1,4 @@
-// Last updated: 11/13/2026, 2:05:01 PM
+// Last updated: 11/13/2026, 2:07:06 PM
 1class Solution {
 2public:
 3    int longestArithSeqLength(vector<int>& nums) {
@@ -10,12 +10,14 @@
 9                int diff = nums[i] - nums[j];
 10                int len = 2;
 11                if (dp[j].count(diff)) {
-12                    len = 1 + dp[j][diff];
+12                   dp[i][diff] = dp[j][diff] + 1;
 13                }
-14                dp[i][diff] = max(dp[i][diff], len);
-15                ans = max(ans, dp[i][diff]);
-16            }
-17        }
-18        return ans;
-19    }
-20};
+14                else {
+15                    dp[i][diff]=2;
+16                }
+17                ans = max(ans, dp[i][diff]);
+18            }
+19        }
+20        return ans;
+21    }
+22};
