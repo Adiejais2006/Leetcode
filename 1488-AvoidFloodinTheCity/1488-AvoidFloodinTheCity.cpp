@@ -1,4 +1,4 @@
-// Last updated: 11/15/2026, 3:10:57 PM
+// Last updated: 11/15/2026, 3:18:21 PM
 1class Solution {
 2public:
 3    vector<int> avoidFlood(vector<int>& rains) {
@@ -8,9 +8,9 @@
 7            if (rains[i] > 0) {
 8                mp[rains[i]].push(i);
 9            }
-10        }
-11        set<pair<int, int>> st;
-12        unordered_set<int> full;
+10        } // lake aur unke days queue me taki orderd way me mile
+11        set<pair<int, int>> st; // next occurence (day) of filled lake and lake ye drying ke liye use ho raha haim
+12        unordered_set<int> full; // full rivers
 13        vector<int> ans(n, 1);
 14        for (int i = 0; i < n; i++) {
 15            if (rains[i] > 0) {
