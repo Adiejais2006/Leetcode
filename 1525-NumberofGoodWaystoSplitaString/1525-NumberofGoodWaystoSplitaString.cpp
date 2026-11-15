@@ -1,25 +1,34 @@
-// Last updated: 11/15/2026, 1:48:11 PM
+// Last updated: 11/15/2026, 1:56:03 PM
 1class Solution {
 2public:
 3    int numSplits(string s) {
 4        int n = s.size();
-5        vector<int> prefixunique(n, 0);
-6        vector<int> suffixunique(n, 0);
-7        unordered_set<char> st;
-8        for (int i = 0; i < n; i++) {
-9            st.insert(s[i]);
-10            prefixunique[i] = st.size();
-11        }
-12        st.clear();
-13        for (int i = n - 1; i >= 0; i--) {
-14            st.insert(s[i]);
-15            suffixunique[i] = st.size();
-16        }
-17        int ans = 0;
-18        for (int i = 1; i < n; i++) {
-19            if (prefixunique[i - 1] == suffixunique[i])
-20                ans++;
-21        }
-22        return ans;
-23    }
-24};
+5        vector<int> rightside(26, 0);
+6        vector<int> leftside(26, 0);
+7        int leftunique = 0;
+8        int rightunique = 0;
+9        int ans = 0 ; 
+10        for (int i = 0; i < n; i++) {
+11            if (rightside[s[i] - 'a'] == 0) {
+12                rightunique++;
+13            }
+14            rightside[s[i] - 'a']++;
+15        }
+16
+17        for (int i = 0; i < n - 1; i++) {
+18            int idx = s[i] - 'a';
+19
+20            if (leftside[idx] == 0) {
+21                leftunique++;
+22            }
+23            leftside[idx]++;
+24
+25            rightside[idx]--;
+26            if (rightside[idx] == 0) {
+27                rightunique--;
+28            }
+29            if(leftunique==rightunique)ans++;
+30        }
+31        return ans ;
+32    }
+33};
