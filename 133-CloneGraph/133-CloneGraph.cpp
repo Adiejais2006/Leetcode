@@ -1,9 +1,9 @@
-// Last updated: 11/17/2026, 1:48:32 PM
+// Last updated: 11/17/2026, 1:53:37 PM
 1
 2class Solution {
 3    Node* func(Node* node, unordered_map<Node*, Node*>& mpp) {
-4        if (node == nullptr)
-5            return nullptr;
+4        if (!node)
+5            return NULL;
 6        if (mpp.find(node) != mpp.end())
 7            return mpp[node];
 8        Node* root = new Node(node->val);
