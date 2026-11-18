@@ -1,4 +1,4 @@
-// Last updated: 11/18/2026, 2:52:47 PM
+// Last updated: 11/18/2026, 2:54:53 PM
 1class Solution {
 2public:
 3    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst,
@@ -12,28 +12,25 @@
 11            int wt = it[2];
 12            adj[u].push_back({v, wt});
 13        }
-14        priority_queue<pair<int, pair<int, int>>,
-15                       vector<pair<int, pair<int, int>>>,
-16                       greater<pair<int, pair<int, int>>>>
-17            pq; // steps , node and wt
-18        pq.push({0, {src, 0}});
-19        while (!pq.empty()) {
-20            auto [steps, nodeAndWt] = pq.top();
-21            pq.pop();
-22            auto [node, currwt] = nodeAndWt;
-23            for (auto it : adj[node]) {
-24                int adjNode = it.first;
-25                int adjwt = it.second;
-26                int totalwt = currwt + adjwt;
-27                if (dist[adjNode] > totalwt && steps <= k) {
-28                    dist[adjNode] = totalwt;
-29                    pq.push({steps + 1, {adjNode, totalwt}});
-30                }
-31            }
-32        }
-33        if (dist[dst] == 1e9)
-34            return -1;
-35        else
-36            return dist[dst];
-37    }
-38};
+14        queue<pair<int, pair<int, int>>> pq; // steps , node and wt
+15        pq.push({0, {src, 0}});
+16        while (!pq.empty()) {
+17            auto [steps, nodeAndWt] = pq.front();
+18            pq.pop();
+19            auto [node, currwt] = nodeAndWt;
+20            for (auto it : adj[node]) {
+21                int adjNode = it.first;
+22                int adjwt = it.second;
+23                int totalwt = currwt + adjwt;
+24                if (dist[adjNode] > totalwt && steps <= k) {
+25                    dist[adjNode] = totalwt;
+26                    pq.push({steps + 1, {adjNode, totalwt}});
+27                }
+28            }
+29        }
+30        if (dist[dst] == 1e9)
+31            return -1;
+32        else
+33            return dist[dst];
+34    }
+35};
