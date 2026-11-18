@@ -1,37 +1,32 @@
-// Last updated: 11/1/2026, 8:37:05 PM
+// Last updated: 11/18/2026, 3:17:32 PM
 1class TimeMap {
-2    public:
-3    unordered_map<string, vector<pair<int, string>>> mpp;
-4public:
-5    TimeMap() {
-6    
+2    unordered_map<string, vector<pair<int, string>>> mpp;
+3public:
+4    TimeMap() {}
+5    void set(string key, string value, int timestamp) {
+6        mpp[key].push_back({timestamp, value});
 7    }
-8    void set(string key, string value, int timestamp) {
-9        mpp[key].push_back({timestamp,value});
-10    }
-11
-12    string get(string key, int timestamp) {
-13        if(mpp.find(key)==mpp.end())return "";
-14        auto &temp = mpp[key];
-15        int n = temp.size();
-16        int low = 0 ;
-17        int high = n-1;
-18        string ans ="";
-19        while(low<=high){
-20            int mid =(low+(high-low)/2);
-21            if(temp[mid].first<=timestamp){
-22                ans=temp[mid].second;
-23                low = mid+1;
-24            }
-25            else high = mid-1;
-26        }
-27        return ans ;
-28    }
-29};
-30
-31/**
-32 * Your TimeMap object will be instantiated and called as such:
-33 * TimeMap* obj = new TimeMap();
-34 * obj->set(key,value,timestamp);
-35 * string param_2 = obj->get(key,timestamp);
-36 */
+8    string get(string key, int timestamp) {
+9        auto& temp = mpp[key];
+10        int n = temp.size();
+11        int low = 0;
+12        int high = n - 1;
+13        string ans = "";
+14        while(low<=high){
+15             int mid =(low+(high-low)/2);
+16             if(temp[mid].first>timestamp) high =mid-1;
+17             else {
+18                low=mid+1 ;
+19                ans = temp[mid].second;
+20             }
+21        }
+22        return ans;
+23    }
+24};
+25
+26/**
+27 * Your TimeMap object will a instantiated and called as such:
+28 * TimeMap* obj = new TimeMap();
+29 * obj->set(key,value,timestamp);
+30 * string param_2 = obj->get(key,timestamp);
+31 */
